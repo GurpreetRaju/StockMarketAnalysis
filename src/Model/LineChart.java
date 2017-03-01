@@ -41,7 +41,7 @@ public class LineChart extends ApplicationFrame{
 	public XYDataset createDataset(){
 		TimeSeries series1 = new TimeSeries("21 Day");
 		
-		series1.add(new Day(toDate("12/17/2016")),49.6);
+		series1.add(new Day(toDate("12/17/2016")),49.6);//pass a string date and stock price moving average value
 		series1.add(new Day(toDate("12/18/2016")),42);
 		series1.add(new Day(toDate("12/20/2016")),56.4);
 		series1.add(new Day(toDate("12/21/2016")),66);
@@ -72,7 +72,6 @@ public class LineChart extends ApplicationFrame{
 	    } catch (ParseException e) {
 	        e.printStackTrace();
 	    }
-	    System.out.println(date);
 		return date;
 	}
 	
