@@ -1,6 +1,5 @@
 package Model;
 
-import org.jfree.chart.ChartPanel;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -9,33 +8,23 @@ import java.util.Date;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
-import org.jfree.ui.ApplicationFrame;
-import org.jfree.ui.RefineryUtilities;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
 
-public class LineChart extends ApplicationFrame{
+public class LineChart implements Chart{
 
 	private String chartTitle = "StockChart";
 	private String xAxisLabel = "Date";
 	private String yAxisLabel = "Stock price";
 	
-	public LineChart(){
-		super("LineChart");
-		//this.chartTitle = ChartName;
-		CreateChart();
-	}
-	
-	public void CreateChart(){
+	public JFreeChart CreateChart(){
 		
 		JFreeChart lineChart = ChartFactory.createTimeSeriesChart(chartTitle,
 		            xAxisLabel, yAxisLabel, createDataset(),true,true,false);
-	         
-	      ChartPanel chartPanel = new ChartPanel( lineChart );
-	      chartPanel.setPreferredSize( new java.awt.Dimension( 560 , 367 ) );
-	      setContentPane( chartPanel );
+	      
+	      return lineChart;
 	}
 	
 	public XYDataset createDataset(){
@@ -74,13 +63,5 @@ public class LineChart extends ApplicationFrame{
 	    }
 		return date;
 	}
-	
-	public static void main( String[ ] args ) {
-	      LineChart chart = new LineChart();
-
-	      chart.pack( );
-	      RefineryUtilities.centerFrameOnScreen( chart );
-	      chart.setVisible( true );
-	}
-	
+		
 }
