@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
@@ -18,7 +19,12 @@ public class LineChart implements Chart{
 	private String chartTitle = "StockChart";
 	private String xAxisLabel = "Date";
 	private String yAxisLabel = "Stock price";
+	private LinkedList<String[]> data;
 	
+	public LineChart(LinkedList<String[]> data2) {
+		this.data = data2;
+	}
+
 	public JFreeChart CreateChart(){
 		
 		JFreeChart lineChart = ChartFactory.createTimeSeriesChart(chartTitle,
@@ -29,20 +35,14 @@ public class LineChart implements Chart{
 	
 	public XYDataset createDataset(){
 		TimeSeries series1 = new TimeSeries("21 Day");
-		
-		series1.add(new Day(toDate("12/17/2016")),49.6);//pass a string date and stock price moving average value
-		series1.add(new Day(toDate("12/18/2016")),42);
-		series1.add(new Day(toDate("12/20/2016")),56.4);
-		series1.add(new Day(toDate("12/21/2016")),66);
-		series1.add(new Day(toDate("12/22/2016")),57);
-		
+		data.remove();
+		while(data.size()!=0){
+			String[] elt = data.remove();
+			series1.add(new Day(toDate(elt[0])),Float.parseFloat(elt[1]));//pass a string date and stock price moving average value
+		}
 		TimeSeries series2 = new TimeSeries("55 Day");
 		
-		series2.add(new Day(toDate("12/17/2016")),46);
-		series2.add(new Day(toDate("12/18/2016")),42.2);
-		series2.add(new Day(toDate("12/20/2016")),54);
-		series2.add(new Day(toDate("12/21/2016")),68.6);
-		series2.add(new Day(toDate("12/22/2016")),57.2);
+		series2.add(new Day(toDate("2016-12-24")),46);
 			
 		TimeSeriesCollection dataset = new TimeSeriesCollection();
 		dataset.addSeries(series1);        
@@ -52,9 +52,10 @@ public class LineChart implements Chart{
 	}
 	
 	private Date toDate(String dateString){
-		DateFormat df = new SimpleDateFormat("MM/dd/yyyy"); 
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd"); 
 	    Date date = null;
 	    try {
+	    	System.out.println(dateString);
 	        date = df.parse(dateString);
 	        String newDateString = df.format(date);
 	        System.out.println(newDateString);
