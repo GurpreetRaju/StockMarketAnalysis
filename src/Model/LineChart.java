@@ -7,7 +7,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 
+import javax.swing.JFrame;
+
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
@@ -63,6 +66,21 @@ public class LineChart implements Chart{
 	        e.printStackTrace();
 	    }
 		return date;
+	}
+	
+	public static void main(String[] arg) throws Exception{
+		LinkedList<String[]> list = new LinkedList<String[]>();
+		Data data = new Data();
+		list = data.getData();
+		LineChart linechart = new LineChart(list);
+		JFreeChart chart = linechart.CreateChart();
+		ChartPanel chartPanel = new ChartPanel( chart );
+		chartPanel.setPreferredSize( new java.awt.Dimension( 560 , 367 ) );
+		JFrame jFrame = new JFrame();
+		jFrame.add(chartPanel);
+		chartPanel.setVisible( true );
+		jFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		jFrame.setVisible(true);
 	}
 		
 }

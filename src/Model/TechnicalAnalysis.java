@@ -28,6 +28,7 @@ public class TechnicalAnalysis{
 		JFrame jFrame = new JFrame();
 		jFrame.add(chartPanel);
 		chartPanel.setVisible( true );
+		jFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		jFrame.setVisible(true);
 	}
 }
