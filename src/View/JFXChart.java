@@ -1,3 +1,5 @@
+package View;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
@@ -27,36 +29,36 @@ import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 
-
-public class JavaFXTry extends Application {
-	
-//    private DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE ;
+public class JFXChart extends Application {
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy MM dd");
 
+    //TODO: Move to separate entry point class
     public static void main(String[] args) {
         launch(args);
     }
     
     @Override
     public void start(Stage primaryStage) {
-        CategoryAxis xAxis = new CategoryAxis();
-        xAxis.setLabel("Date");
+        
+    	CategoryAxis xAxis = new CategoryAxis();
         NumberAxis yAxis = new NumberAxis();
-        yAxis.setLabel("Value");
 
+        xAxis.setLabel("Date");
+        
         ObservableList<Data<String, Number>> data = FXCollections.observableArrayList();
         
         SortedList<Data<String, Number>> sortedData = new SortedList<>(data, (data1, data2) -> 
                 data1.getXValue().compareTo(data2.getXValue()));
 
         LineChart<String, Number> chart = new LineChart<>(xAxis, yAxis);
+        chart.setAnimated(true);
 
         XYChart.Series series = new XYChart.Series(sortedData);
         series.setName("Stock");
         chart.getData().add(series);
         
 //        chart.getData().add(new Series<>(sortedData));
-        chart.setAnimated(true);
+//        chart.setAnimated(true);
 
         final int dayRange = 30 ;
         LocalDate today = LocalDate.now() ;
@@ -148,4 +150,5 @@ public class JavaFXTry extends Application {
         primaryStage.show();
 */
     }
+
 }
