@@ -23,7 +23,7 @@ public class StockController {
 			String[] time = theview.getTime();
 			theview.setVisible(false);
 	          @SuppressWarnings("unused")
-			TechnicalAnalysisController taController = new TechnicalAnalysisController(new TechnicalAnalysisView(), new TechnicalAnalysis(), time);
+			TechnicalAnalysisController taController = new TechnicalAnalysisController(new TechnicalAnalysis(), time);
 	    }
 	}
 }

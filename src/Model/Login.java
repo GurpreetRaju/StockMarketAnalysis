@@ -2,8 +2,8 @@ package Model;
 
 public class Login {
 	//private String UsrName;
-	private String UserID = "myusername";
-	private String password = "abc123";
+	private String UserID = "1";
+	private String password = "1";
 	
 	public boolean authenticate(String uid, String pwd){
 		System.out.println(uid);
