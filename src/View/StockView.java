@@ -1,14 +1,11 @@
 package View;
 
-import java.awt.Color;
 import java.awt.Container;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
 public class StockView extends JFrame{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -1684508335936731588L;
 	
 	private JComboBox<String> stocklist;
@@ -31,8 +28,8 @@ public class StockView extends JFrame{
 		from = new JLabel("From:");
 		to = new JLabel("To:");
 		stocklist = new JComboBox<String>(listString);
-		fromField = new JTextField("",10);
-		toField = new JTextField("",10);
+		fromField = new JTextField("MM,DD,YYYY",10);
+		toField = new JTextField("MM,DD,YYYY",10);
 		nextBtn = new JButton();
 		addStockBtn = new JButton();
 		errorMessage = new JLabel(" ");
@@ -100,6 +97,17 @@ public class StockView extends JFrame{
 		
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setVisible(true);
+	}
+	
+	public void nextBtnActionPerformed(ActionListener evt) {
+    	nextBtn.addActionListener(evt);
+    }
+	
+	public String[] getTime(){
+		String[] time = new String[2];
+		time[0] = fromField.getText();
+		time[1] = toField.getText();
+		return time;
 	}
 	
 	public static void main(String[] arg){

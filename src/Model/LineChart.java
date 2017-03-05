@@ -7,10 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 
-import javax.swing.JFrame;
-
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
@@ -23,9 +20,11 @@ public class LineChart implements Chart{
 	private String xAxisLabel = "Date";
 	private String yAxisLabel = "Stock price";
 	private LinkedList<String[]> data;
+	private LinkedList<String[]> listMA;
 	
-	public LineChart(LinkedList<String[]> data2) {
+	public LineChart(LinkedList<String[]> data2, LinkedList<String[]> listMA) {
 		this.data = data2;
+		this.listMA = listMA;
 	}
 
 	public JFreeChart CreateChart(){
@@ -37,15 +36,20 @@ public class LineChart implements Chart{
 	}
 	
 	public XYDataset createDataset(){
+		System.out.println("Creating dataset");
 		TimeSeries series1 = new TimeSeries("21 Day");
 		data.remove();
 		while(data.size()!=0){
 			String[] elt = data.remove();
-			series1.add(new Day(toDate(elt[0])),Float.parseFloat(elt[1]));//pass a string date and stock price moving average value
+			series1.add(new Day(toDate(elt[0])),Float.parseFloat(elt[4]));//pass a string date and stock price moving average value
 		}
 		TimeSeries series2 = new TimeSeries("55 Day");
 		
-		series2.add(new Day(toDate("2016-12-24")),46);
+		while(!listMA.isEmpty())
+		{
+			String[] elt2 = listMA.remove();
+			series2.add(new Day(toDate(elt2[0])),Float.parseFloat(elt2[1]));
+		}
 			
 		TimeSeriesCollection dataset = new TimeSeriesCollection();
 		dataset.addSeries(series1);        
@@ -66,21 +70,6 @@ public class LineChart implements Chart{
 	        e.printStackTrace();
 	    }
 		return date;
-	}
-	
-	public static void main(String[] arg) throws Exception{
-		LinkedList<String[]> list = new LinkedList<String[]>();
-		Data data = new Data();
-		list = data.getData();
-		LineChart linechart = new LineChart(list);
-		JFreeChart chart = linechart.CreateChart();
-		ChartPanel chartPanel = new ChartPanel( chart );
-		chartPanel.setPreferredSize( new java.awt.Dimension( 560 , 367 ) );
-		JFrame jFrame = new JFrame();
-		jFrame.add(chartPanel);
-		chartPanel.setVisible( true );
-		jFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		jFrame.setVisible(true);
 	}
 		
 }

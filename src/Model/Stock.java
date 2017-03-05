@@ -3,8 +3,7 @@ package Model;
 public class Stock {
 	private String companyName;
 	
-	public Stock(String name){
-		this.companyName = name;
+	public Stock(){
 	}
 	
 	public String getCompanyName(){
