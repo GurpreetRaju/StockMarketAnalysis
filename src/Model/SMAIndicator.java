@@ -12,7 +12,7 @@ public class SMAIndicator{
 	public JFreeChart createChart(LinkedList<String[]> data) {
 		System.out.println("maIndicator.createChart");
 		LinkedList<String[]> listMAs = new LinkedList<String[]>();
-		listMAs = calculateMA(data,5);
+		listMAs = calculateMA(data,21);
 		Chart linechart = new LineChart(data,listMAs);
 		JFreeChart chart = linechart.CreateChart();
 		return chart;

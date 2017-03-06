@@ -37,13 +37,13 @@ public class LineChart implements Chart{
 	
 	public XYDataset createDataset(){
 		System.out.println("Creating dataset");
-		TimeSeries series1 = new TimeSeries("21 Day");
+		TimeSeries series1 = new TimeSeries("Stock");
 		data.remove();
 		while(data.size()!=0){
 			String[] elt = data.remove();
 			series1.add(new Day(toDate(elt[0])),Float.parseFloat(elt[4]));//pass a string date and stock price moving average value
 		}
-		TimeSeries series2 = new TimeSeries("55 Day");
+		TimeSeries series2 = new TimeSeries("21 Day MA");
 		
 		while(!listMA.isEmpty())
 		{
