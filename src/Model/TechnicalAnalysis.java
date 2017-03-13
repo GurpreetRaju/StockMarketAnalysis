@@ -3,19 +3,22 @@ package Model;
 import org.jfree.chart.JFreeChart;
 
 public class TechnicalAnalysis{
-	private Data data = new Data();
-	private SMAIndicator maIndicator = new SMAIndicator();
-	
+	//private SMAIndicator maIndicator = new SMAIndicator();
+	private LineChart chart = null;
+		
 	public JFreeChart performAnalysis(String[] timeperiod){
-		JFreeChart chart = null;
 		try{
 			System.out.println("Call to maIndicator");
-			chart = maIndicator.createChart(data.getData(timeperiod));
+			chart = new LineChart("Google", timeperiod);
 		}
 		catch(Exception e){
 			
 		}
-		return chart;
+		return chart.getChart();
+	}
+	
+	public void addMA(int n){
+		chart.updateDataset(n);
 	}
 	
 }

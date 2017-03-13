@@ -2,23 +2,20 @@ package Model;
 
 import java.util.LinkedList;
 
-import org.jfree.chart.JFreeChart;
-
 public class SMAIndicator{
 
-	public SMAIndicator() {
-	}
+	public SMAIndicator() {	}
 
-	public JFreeChart createChart(LinkedList<String[]> data) {
+	/*public JFreeChart createChart(LinkedList<String[]> data) {
 		System.out.println("maIndicator.createChart");
 		LinkedList<String[]> listMAs = new LinkedList<String[]>();
 		listMAs = calculateMA(data,21);
 		Chart linechart = new LineChart(data,listMAs);
 		JFreeChart chart = linechart.CreateChart();
 		return chart;
-	}
+	}*/
 	
-	private LinkedList<String[]> calculateMA(LinkedList<String[]> data, int n){
+	public LinkedList<String[]> calculateMA(LinkedList<String[]> data, int n){
 		LinkedList<String[]> listMA = new LinkedList<String[]>();
 		int j = data.size() - 1;
 		while(j>n){

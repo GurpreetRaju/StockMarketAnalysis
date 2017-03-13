@@ -111,6 +111,7 @@ public class StockView extends JFrame{
 	}
 	
 	public static void main(String[] arg){
+		@SuppressWarnings("unused")
 		StockView sv = new StockView();
 	}
 }
