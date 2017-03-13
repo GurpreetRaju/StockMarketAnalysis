@@ -12,51 +12,73 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
-import org.jfree.data.xy.XYDataset;
 
 public class LineChart implements Chart{
 
 	private String chartTitle = "StockChart";
 	private String xAxisLabel = "Date";
 	private String yAxisLabel = "Stock price";
+	//private static Plot plot = (XYPlot) new Plot();
+	private String[] timePeriod = new String[2];
 	private LinkedList<String[]> data;
-	private LinkedList<String[]> listMA;
+	private JFreeChart lineChart;
+	private TimeSeriesCollection dataset;
 	
-	public LineChart(LinkedList<String[]> data2, LinkedList<String[]> listMA) {
-		this.data = data2;
-		this.listMA = listMA;
+	public LineChart(String company, String[] time) {
+		this.chartTitle = company;
+		this.timePeriod = time;
+		Data stockData = new Data();
+		try {
+			this.data = stockData.getData(this.timePeriod);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		createChart();
 	}
 
-	public JFreeChart CreateChart(){
+	private void createChart(){
 		
-		JFreeChart lineChart = ChartFactory.createTimeSeriesChart(chartTitle,
+		lineChart = ChartFactory.createTimeSeriesChart(chartTitle,
 		            xAxisLabel, yAxisLabel, createDataset(),true,true,false);
-	      
-	      return lineChart;
 	}
 	
-	public XYDataset createDataset(){
+	public JFreeChart getChart(){
+		return lineChart;
+	}
+	
+	public TimeSeriesCollection createDataset(){
 		System.out.println("Creating dataset");
 		TimeSeries series1 = new TimeSeries("Stock");
-		data.remove();
-		while(data.size()!=0){
-			String[] elt = data.remove();
+		int i = 0;
+		while(i<data.size()){
+			String[] elt = data.get(i);
 			series1.add(new Day(toDate(elt[0])),Float.parseFloat(elt[4]));//pass a string date and stock price moving average value
+			i++;
 		}
-		TimeSeries series2 = new TimeSeries("21 Day MA");
+		
+		dataset = new TimeSeriesCollection();
+		dataset.addSeries(series1);        
+		
+		return dataset;
+	}
+	
+	public void updateDataset(int n){
+		
+		LinkedList<String[]> listMA = new SMAIndicator().calculateMA(data, n);
+		
+		TimeSeries series2 = new TimeSeries(n + " Day MA");
 		
 		while(!listMA.isEmpty())
 		{
 			String[] elt2 = listMA.remove();
-			series2.add(new Day(toDate(elt2[0])),Float.parseFloat(elt2[1]));
+			((TimeSeries) series2).add(new Day(toDate(elt2[0])),Float.parseFloat(elt2[1]));
 		}
-			
-		TimeSeriesCollection dataset = new TimeSeriesCollection();
-		dataset.addSeries(series1);        
+		TimeSeriesCollection dataset = (TimeSeriesCollection) lineChart.getXYPlot().getDataset();
 		dataset.addSeries(series2);
-		
-		return dataset;
+		lineChart.getXYPlot().setDataset(dataset);
 	}
+	
 	
 	private Date toDate(String dateString){
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd"); 

@@ -1,11 +1,11 @@
 package View;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import  javax.swing.*;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -13,7 +13,7 @@ import org.jfree.chart.JFreeChart;
 /**
  * @author Gurpreet
  */
-public class TechnicalAnalysisView extends javax.swing.JFrame {
+public class TechnicalAnalysisView extends JFrame {
 
 	private static final long serialVersionUID = 494000442742952620L;
 	public TechnicalAnalysisView() {
@@ -22,21 +22,22 @@ public class TechnicalAnalysisView extends javax.swing.JFrame {
 
      private void initComponents() {
 
-    	ResultLabel = new javax.swing.JLabel();
-        AnalysisLabel = new javax.swing.JLabel();
-        BackBtn = new javax.swing.JButton();
-        CloseBtn = new javax.swing.JButton();
+    	ResultLabel = new JLabel("Results will be sown here");
+    	MAlabel = new JLabel("Add Moving average");
+        AnalysisLabel = new JLabel();
+        BackBtn = new JButton();
+        MAbox = new JSpinner(new SpinnerNumberModel(5,0,360,1));
+        addMA = new JButton();
+        CloseBtn = new JButton();
         wChartPanel = new JPanel();
         wChartPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        wChartPanel.setPreferredSize(new Dimension(650, 650));
         wChartPanel.validate();
-
+        AnalysisLabel.setPreferredSize(new Dimension(400,30));
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         wChartPanel.setName("wChartPanel"); 
 
-        javax.swing.SpringLayout wChartPanelLayout = new javax.swing.SpringLayout();
+        SpringLayout wChartPanelLayout = new SpringLayout();
         wChartPanel.setLayout(wChartPanelLayout);
         
         ResultLabel.setName("AnalsysResult");
@@ -45,50 +46,52 @@ public class TechnicalAnalysisView extends javax.swing.JFrame {
         AnalysisLabel.setName("AnalysisLabel"); 
 
         BackBtn.setText("Back");
-
+        addMA.setText("ADD");
         CloseBtn.setText("Close");
         CloseBtn.setName("Back");
         CloseBtn.addActionListener(e ->  System.exit(0));
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(wChartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(AnalysisLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
-                    .addComponent(ResultLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(BackBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 562, Short.MAX_VALUE)
-                .addComponent(CloseBtn)
-                .addGap(40, 40, 40))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(AnalysisLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ResultLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(wChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BackBtn)
-                    .addComponent(CloseBtn))
-                .addGap(25, 25, 25))
-        );
-
-        pack();
+        
+        SpringLayout layout = new SpringLayout();
+        Container contentPane = this.getContentPane();
+        this.getContentPane().setLayout(layout);
+        
+        this.add(wChartPanel);
+        this.add(AnalysisLabel);
+        this.add(ResultLabel);
+        this.add(MAlabel);
+        this.add(MAbox);
+        this.add(addMA);
+        this.add(CloseBtn);
+        this.add(BackBtn);
+        
+        layout.putConstraint(SpringLayout.WEST, wChartPanel, 50, SpringLayout.WEST, contentPane);
+		layout.putConstraint(SpringLayout.WEST, MAlabel, 50, SpringLayout.WEST, contentPane);
+		layout.putConstraint(SpringLayout.WEST, BackBtn, 50, SpringLayout.WEST, contentPane);
+		layout.putConstraint(SpringLayout.EAST, wChartPanel, -30, SpringLayout.WEST, AnalysisLabel);
+		layout.putConstraint(SpringLayout.EAST, AnalysisLabel, -50, SpringLayout.EAST, contentPane);
+		layout.putConstraint(SpringLayout.WEST, ResultLabel, 0, SpringLayout.WEST, AnalysisLabel);
+		layout.putConstraint(SpringLayout.EAST, ResultLabel, 0, SpringLayout.EAST, AnalysisLabel);
+		layout.putConstraint(SpringLayout.WEST, MAbox, 10, SpringLayout.EAST, MAlabel);
+		layout.putConstraint(SpringLayout.WEST, addMA, 10, SpringLayout.EAST, MAbox);
+		layout.putConstraint(SpringLayout.EAST, CloseBtn, -50, SpringLayout.EAST, contentPane);
+		
+		layout.putConstraint(SpringLayout.NORTH, wChartPanel, 50, SpringLayout.NORTH, contentPane);
+		layout.putConstraint(SpringLayout.SOUTH, wChartPanel, -200, SpringLayout.SOUTH, contentPane);
+		layout.putConstraint(SpringLayout.NORTH, AnalysisLabel, 0, SpringLayout.NORTH, wChartPanel);
+		layout.putConstraint(SpringLayout.NORTH, ResultLabel, 10, SpringLayout.SOUTH, AnalysisLabel);
+		layout.putConstraint(SpringLayout.NORTH, MAlabel, 10, SpringLayout.SOUTH, wChartPanel);
+		layout.putConstraint(SpringLayout.NORTH, MAbox, 0, SpringLayout.NORTH, MAlabel);
+		layout.putConstraint(SpringLayout.NORTH, addMA, 0, SpringLayout.NORTH, MAbox);
+		layout.putConstraint(SpringLayout.SOUTH, BackBtn, -50, SpringLayout.SOUTH, contentPane);
+		layout.putConstraint(SpringLayout.SOUTH, CloseBtn, -50, SpringLayout.SOUTH, contentPane);
+		
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setVisible(true);
-    }                    
+    }
+     
+    public int getSpinnerValue(){
+    	return (int) MAbox.getValue();
+    }
      
     public void setChart(JFreeChart chart){
     	chartPanel = new ChartPanel(chart);
@@ -97,11 +100,18 @@ public class TechnicalAnalysisView extends javax.swing.JFrame {
     	wChartPanel.revalidate();
     	wChartPanel.repaint();
     }
+    
+    public void AddBtnActionPerformed(ActionListener evt) {
+    	addMA.addActionListener(evt);
+    }
                    
-    private javax.swing.JButton BackBtn;
-    private javax.swing.JButton CloseBtn;
-    private javax.swing.JLabel ResultLabel;
-    private javax.swing.JLabel AnalysisLabel;
+    private JButton BackBtn;
+    private JButton CloseBtn;
+    private JSpinner MAbox;
+    private JButton addMA;
+    private JLabel ResultLabel;
+    private JLabel MAlabel;
+    private JLabel AnalysisLabel;
     private JPanel wChartPanel;
     private ChartPanel chartPanel;
 }
