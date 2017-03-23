@@ -4,26 +4,28 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import Model.Stock;
-import Model.TechnicalAnalysis;
 import View.StockView;
-import View.TechnicalAnalysisView;
 
 public class StockController {
 	private StockView theview;
+	@SuppressWarnings("unused")
 	private Stock themodel;
 	
-	public StockController(StockView theview, Stock themodel){
-		this.theview = theview;
-		this.themodel = themodel;
+	public StockController(){
+		this.theview =  new StockView(); ;
+		this.themodel = new Stock();
 		this.theview.nextBtnActionPerformed(new ListenerStock());
 	}
 	
 	class ListenerStock implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			String[] time = theview.getTime();
+			String companyName = "CompanyName";
+			String companyCode = themodel.getStockCode(theview.getStock());
+			//String[] time = {"01,28,2016", "02,28,2017"};
 			theview.setVisible(false);
 	          @SuppressWarnings("unused")
-			TechnicalAnalysisController taController = new TechnicalAnalysisController(new TechnicalAnalysisView(), new TechnicalAnalysis(), time);
+			TechnicalAnalysisController taController = new TechnicalAnalysisController(companyName, time, companyCode);
 	    }
 	}
 }

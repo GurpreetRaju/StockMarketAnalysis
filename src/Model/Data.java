@@ -8,12 +8,12 @@ import java.util.LinkedList;
 
 public class Data {
 	
-	public LinkedList<String[]> getData(String[] timeperiod) throws Exception {
+	public LinkedList<String[]> getData(String[] timeperiod, String companyName) throws Exception {
 		LinkedList<String[]> linkedlist = new LinkedList<String[]>();
 		
 		String[] datefrom = timeperiod[0].split(",");// format MM,DD,YYYY
 		String[] dateto = timeperiod[1].split(",");//format MM,DD,YYYY
-		String urlString = "http://ichart.finance.yahoo.com/table.csv?s=GOOGL&a="+ datefrom[0] +"&b=" + datefrom[1] + "&c=" + datefrom[2] + "&d=" + dateto[0] + "&e=" + dateto[1] + "&f=" + dateto[2] + "&g=d&ignore=.csv";
+		String urlString = "http://ichart.finance.yahoo.com/table.csv?s="+ companyName +"&a="+ datefrom[0] +"&b=" + datefrom[1] + "&c=" + datefrom[2] + "&d=" + dateto[0] + "&e=" + dateto[1] + "&f=" + dateto[2] + "&g=d&ignore=.csv";
 		//System.out.println(urlString);
 		URL oracle = new URL(urlString);
         URLConnection url = oracle.openConnection();
@@ -35,6 +35,6 @@ public class Data {
 	public static void main(String[] arg) throws Exception{
 		Data data = new Data();
 		String[] time = {"01,01,2016","01,01,2017"};
-		data.getData(time);
+		data.getData(time, "GOOGL");
 	}
 }

@@ -25,7 +25,7 @@ public class LoginController {
 	            	 loginView.setVisible(false);
 	            	 loginView.dispose();
 	            	 @SuppressWarnings("unused")
-					StockController sc = new StockController(new StockView(), new Stock());
+					StockController sc = new StockController();
 	             }
 	             else{
 	            	 loginView.displayErrorMessage("Invalid Username or Password!");

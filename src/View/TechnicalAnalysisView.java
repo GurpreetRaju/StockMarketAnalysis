@@ -1,6 +1,5 @@
 package View;
 
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
@@ -30,7 +29,7 @@ public class TechnicalAnalysisView extends JFrame {
         addMA = new JButton();
         CloseBtn = new JButton();
         wChartPanel = new JPanel();
-        wChartPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        //wChartPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         wChartPanel.validate();
         AnalysisLabel.setPreferredSize(new Dimension(400,30));
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -86,7 +85,6 @@ public class TechnicalAnalysisView extends JFrame {
 		layout.putConstraint(SpringLayout.SOUTH, CloseBtn, -50, SpringLayout.SOUTH, contentPane);
 		
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
-        this.setVisible(true);
     }
      
     public int getSpinnerValue(){
@@ -95,7 +93,8 @@ public class TechnicalAnalysisView extends JFrame {
      
     public void setChart(JFreeChart chart){
     	chartPanel = new ChartPanel(chart);
-    	chartPanel.setPreferredSize(wChartPanel.getSize());
+    	chartPanel.setSize(wChartPanel.getPreferredSize());
+    	//chartPanel.setPreferredSize(new Dimension(300,300));
     	wChartPanel.add(chartPanel);
     	wChartPanel.revalidate();
     	wChartPanel.repaint();

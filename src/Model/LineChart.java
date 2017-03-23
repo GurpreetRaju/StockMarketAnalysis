@@ -20,16 +20,19 @@ public class LineChart implements Chart{
 	private String yAxisLabel = "Stock price";
 	//private static Plot plot = (XYPlot) new Plot();
 	private String[] timePeriod = new String[2];
+	private String company = new String();
 	private LinkedList<String[]> data;
+	
 	private JFreeChart lineChart;
 	private TimeSeriesCollection dataset;
 	
-	public LineChart(String company, String[] time) {
+	public LineChart(String company, String[] time, String companyName) {
 		this.chartTitle = company;
 		this.timePeriod = time;
+		this.company = companyName;
 		Data stockData = new Data();
 		try {
-			this.data = stockData.getData(this.timePeriod);
+			this.data = stockData.getData(this.timePeriod, this.company);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -41,6 +44,7 @@ public class LineChart implements Chart{
 		
 		lineChart = ChartFactory.createTimeSeriesChart(chartTitle,
 		            xAxisLabel, yAxisLabel, createDataset(),true,true,false);
+		//System.out.println("Done Creating chart");
 	}
 	
 	public JFreeChart getChart(){

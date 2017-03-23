@@ -114,4 +114,8 @@ public class StockView extends JFrame{
 		@SuppressWarnings("unused")
 		StockView sv = new StockView();
 	}
+
+	public String getStock() {		
+		return (String) stocklist.getSelectedItem();
+	}
 }
