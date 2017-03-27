@@ -24,7 +24,7 @@ public class StockController {
 			//String[] time = {"01,28,2016", "02,28,2017"};
 			theview.setVisible(false);
 	          @SuppressWarnings("unused")
-			TechnicalAnalysisController taController = new TechnicalAnalysisController(companyName, time, companyCode);
+			TechnicalAnalysisController taController = new TechnicalAnalysisController();
 	    }
 	}
 }

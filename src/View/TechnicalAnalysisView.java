@@ -53,11 +53,11 @@ public class TechnicalAnalysisView extends JFrame {
     private JButton BackBtn;
     private JButton addStockBtn;
 
-    public TechnicalAnalysisView() {
-        initComponents();
+    public TechnicalAnalysisView(String[] newListString) {
+        initComponents(newListString);
     }
 
-    private void initComponents() {
+    private void initComponents(String[] newListString) {
 
         // Declare View
         stockPanel = new JPanel();
@@ -69,7 +69,7 @@ public class TechnicalAnalysisView extends JFrame {
 
         from = new JLabel("From:");
         to = new JLabel("To:");
-        stocklist = new JComboBox<String>(listString);
+        stocklist = new JComboBox<String>(newListString);
         // :Todo change to dates http://docs.oracle.com/javase/tutorial/uiswing/components/spinner.html
         fromField = new JTextField("MM,DD,YYYY", 10);
         toField = new JTextField("MM,DD,YYYY", 10);
@@ -185,110 +185,16 @@ public class TechnicalAnalysisView extends JFrame {
         gbc.gridheight = 1;
         this.add(controlsPanel, gbc);
 
-
-
-
-//        this.add(stocklist);
-//        this.add(from);
-//        this.add(to);
-//        this.add(fromField);
-//        this.add(toField);
-
-//        this.add(wChartPanel);
-
-//        this.add(analysisLabel);
-//        this.add(resultLabel);
-//        this.add(MAlabel);
-//        this.add(MAbox);
-//        this.add(addMA);
-//        this.add(closeBtn);
-//        this.add(BackBtn);
-//
-//        this.add(nextBtn);
-//        this.add(addStockBtn);
-
-
-//        layout.putConstraint(SpringLayout.NORTH, stockPanel, 10, SpringLayout.NORTH, contentPane);
-//        layout.putConstraint(SpringLayout.WEST, stockPanel, 10, SpringLayout.WEST, contentPane);
-//        layout.putConstraint(SpringLayout.EAST, stockPanel, -10, SpringLayout.WEST, watchListPanel);
-//        layout.putConstraint(SpringLayout.SOUTH, stockPanel, -10, SpringLayout.NORTH, controlsPanel);
-//
-//
-//        layout.putConstraint(SpringLayout.NORTH, stockOptionsPanel, 20, SpringLayout.NORTH, stockPanel);
-//        layout.putConstraint(SpringLayout.WEST, stockOptionsPanel, 20, SpringLayout.WEST, stockPanel);
-//
-//        layout.putConstraint(SpringLayout.NORTH, stocklist, 10, SpringLayout.NORTH, stockOptionsPanel);
-//        layout.putConstraint(SpringLayout.WEST, stocklist, 50, SpringLayout.WEST, stockOptionsPanel);
-//
-//        layout.putConstraint(SpringLayout.NORTH, from, 10, SpringLayout.NORTH, stockOptionsPanel);
-//        layout.putConstraint(SpringLayout.WEST, from, 10, SpringLayout.EAST, stocklist);
-//
-//        layout.putConstraint(SpringLayout.NORTH, fromField, 10, SpringLayout.NORTH, stockOptionsPanel);
-//        layout.putConstraint(SpringLayout.WEST, fromField, 10, SpringLayout.EAST, from);
-//
-//        layout.putConstraint(SpringLayout.NORTH, toField, 10, SpringLayout.NORTH, stockOptionsPanel);
-//        layout.putConstraint(SpringLayout.WEST, toField, 10, SpringLayout.EAST, fromField);
-//
-//        layout.putConstraint(SpringLayout.NORTH, to, 10, SpringLayout.NORTH, stockOptionsPanel);
-//        layout.putConstraint(SpringLayout.WEST, to, 10, SpringLayout.EAST, toField);
-//
-//        layout.putConstraint(SpringLayout.NORTH, wChartPanel, 10, SpringLayout.SOUTH, stockOptionsPanel);
-//        layout.putConstraint(SpringLayout.WEST, wChartPanel, 10, SpringLayout.WEST, stockPanel);
-//        layout.putConstraint(SpringLayout.EAST, wChartPanel, -10, SpringLayout.EAST, stockPanel);
-////        layout.putConstraint(SpringLayout.SOUTH, wChartPanel, 200, SpringLayout.SOUTH, stockOptionsPanel);
-//
-//        layout.putConstraint(SpringLayout.NORTH, watchListPanel, 10, SpringLayout.NORTH, contentPane);
-////        layout.putConstraint(SpringLayout.WEST, watchListPanel, 10, SpringLayout.EAST, stockPanel);
-//        layout.putConstraint(SpringLayout.EAST, watchListPanel, -10, SpringLayout.EAST, contentPane);
-//        layout.putConstraint(SpringLayout.SOUTH, watchListPanel, -10, SpringLayout.NORTH, controlsPanel);
-
-//        layout.putConstraint(SpringLayout.NORTH, analysisPanel, 10, SpringLayout.SOUTH, stockPanel);
-//        layout.putConstraint(SpringLayout.WEST, analysisPanel, 10, SpringLayout.WEST, contentPane);
-//        layout.putConstraint(SpringLayout.EAST, analysisPanel, -10, SpringLayout.WEST, watchListPanel);
-//        layout.putConstraint(SpringLayout.SOUTH, analysisPanel, -10, SpringLayout.NORTH, controlsPanel);
-//
-//        layout.putConstraint(SpringLayout.WEST, controlsPanel, 10, SpringLayout.WEST, contentPane);
-//        layout.putConstraint(SpringLayout.EAST, controlsPanel, -10, SpringLayout.EAST, contentPane);
-//        layout.putConstraint(SpringLayout.SOUTH, controlsPanel, -10, SpringLayout.WEST, contentPane);
-
-
-//        layout.putConstraint(SpringLayout.NORTH, MAlabel, 10, SpringLayout.SOUTH, wChartPanel);
-//        layout.putConstraint(SpringLayout.WEST, MAlabel, 50, SpringLayout.WEST, contentPane);
-//
-//        layout.putConstraint(SpringLayout.SOUTH, BackBtn, -50, SpringLayout.SOUTH, contentPane);
-//        layout.putConstraint(SpringLayout.WEST, BackBtn, 50, SpringLayout.WEST, contentPane);
-//
-//        layout.putConstraint(SpringLayout.NORTH, analysisLabel, 0, SpringLayout.NORTH, wChartPanel);
-//        layout.putConstraint(SpringLayout.EAST, analysisLabel, -50, SpringLayout.EAST, contentPane);
-//
-//        layout.putConstraint(SpringLayout.NORTH, resultLabel, 10, SpringLayout.SOUTH, analysisLabel);
-//        layout.putConstraint(SpringLayout.WEST, resultLabel, 0, SpringLayout.WEST, analysisLabel);
-//        layout.putConstraint(SpringLayout.EAST, resultLabel, 0, SpringLayout.EAST, analysisLabel);
-//
-//        layout.putConstraint(SpringLayout.NORTH, MAbox, 0, SpringLayout.NORTH, MAlabel);
-//        layout.putConstraint(SpringLayout.WEST, MAbox, 10, SpringLayout.EAST, MAlabel);
-//
-//        layout.putConstraint(SpringLayout.NORTH, addMA, 0, SpringLayout.NORTH, MAbox);
-//        layout.putConstraint(SpringLayout.WEST, addMA, 10, SpringLayout.EAST, MAbox);
-//
-//        layout.putConstraint(SpringLayout.SOUTH, closeBtn, -50, SpringLayout.SOUTH, contentPane);
-//        layout.putConstraint(SpringLayout.EAST, closeBtn, -50, SpringLayout.EAST, contentPane);
-//
-//
-//        layout.putConstraint(SpringLayout.NORTH, nextBtn, 10, SpringLayout.SOUTH, fromField);
-//        layout.putConstraint(SpringLayout.WEST, nextBtn, 50, SpringLayout.WEST, contentPane);
-//
-//        layout.putConstraint(SpringLayout.NORTH, addStockBtn, 10, SpringLayout.SOUTH, nextBtn);
-//        layout.putConstraint(SpringLayout.WEST, addStockBtn, 50, SpringLayout.WEST, contentPane);
-//
-//        layout.putConstraint(SpringLayout.NORTH, errorMessage, 10, SpringLayout.SOUTH, addStockBtn);
-//        layout.putConstraint(SpringLayout.WEST, errorMessage, 50, SpringLayout.WEST, contentPane);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     public int getSpinnerValue() {
         return (int) MAbox.getValue();
     }
+    
+    public String getStock() {		
+		return (String) stocklist.getSelectedItem();
+	}
 
     public void setChart(JFreeChart chart) {
         chartPanel = new ChartPanel(chart);

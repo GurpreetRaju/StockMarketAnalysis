@@ -27,7 +27,6 @@ public class Data {
         }
         in.close();
         
-        
         linkedlist.removeFirst();
         
 		return linkedlist;

@@ -23,7 +23,7 @@ public class LoginController {
 	            	 loginView.setVisible(false);
 	            	 loginView.dispose();
 	            	 @SuppressWarnings("unused")
-					StockController sc = new StockController();
+					TechnicalAnalysisController ta = new TechnicalAnalysisController();
 	             }
 	             else{
 	            	 loginView.displayErrorMessage("Invalid Username or Password!");
