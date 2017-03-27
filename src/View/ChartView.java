@@ -30,56 +30,56 @@ public class ChartView extends Application {
     
     @Override
     public void start(Stage stage) {
-    	final CategoryAxis xAxis = new CategoryAxis();
-        final NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Date");
-        
-        final LineChart<String, Number> chart = new LineChart<>(xAxis, yAxis);
-        chart.setAnimated(true);
-        chart.setTitle("Stock Market Analysis");
-        
-        XYChart.Series stock = new XYChart.Series();
-        
-        stock.setName("Stock 1");
-        
-        //TODO: Not real View for now, I don't know how to make View separated. 
-        
-        LinkedList<StockListNode> stock = 
-        
-        
-        XYChart.Series series = new XYChart.Series(sortedData);
-        series.setName("Stock");
-        chart.getData().add(series);
-        
-//        chart.getData().add(new Series<>(sortedData));
+//    	final CategoryAxis xAxis = new CategoryAxis();
+//        final NumberAxis yAxis = new NumberAxis();
+//        xAxis.setLabel("Date");
+//
+//        final LineChart<String, Number> chart = new LineChart<>(xAxis, yAxis);
 //        chart.setAnimated(true);
-
-        final int dayRange = 30 ;
-        LocalDate today = LocalDate.now() ;
-        Random rng = new Random();
-
-        for (int i = 0; i < 20 ; i++) {
-            LocalDate date = today.minusDays(rng.nextInt(dayRange));
-            String formattedDate = formatter.format(date);
-            double value = rng.nextDouble() ;
-
-            addData(data, formattedDate, value);
-        }
-
-        DatePicker datePicker = new DatePicker();
-        Spinner<Double> valuePicker = new Spinner<>(0.0, 1.0, 0, 0.1);
-        valuePicker.setEditable(true);
-
-        Button addButton = new Button("Add");
-        addButton.setOnAction(e -> addData(data, formatter.format(datePicker.getValue()), valuePicker.getValue()));
-
-        HBox controls = new HBox(5, datePicker, valuePicker, addButton);
-        controls.setAlignment(Pos.CENTER);
-        controls.setPadding(new Insets(5));
-
-        BorderPane root = new BorderPane(chart, null, null, controls, null);
-        primaryStage.setScene(new Scene(root, 600, 600));
-        primaryStage.show();
+//        chart.setTitle("Stock Market Analysis");
+//
+//        XYChart.Series stock = new XYChart.Series();
+//
+//        stock.setName("Stock 1");
+//
+//        //TODO: Not real View for now, I don't know how to make View separated.
+//
+//        LinkedList<StockListNode> stock =
+//
+//
+//        XYChart.Series series = new XYChart.Series(sortedData);
+//        series.setName("Stock");
+//        chart.getData().add(series);
+//
+////        chart.getData().add(new Series<>(sortedData));
+////        chart.setAnimated(true);
+//
+//        final int dayRange = 30 ;
+//        LocalDate today = LocalDate.now() ;
+//        Random rng = new Random();
+//
+//        for (int i = 0; i < 20 ; i++) {
+//            LocalDate date = today.minusDays(rng.nextInt(dayRange));
+//            String formattedDate = formatter.format(date);
+//            double value = rng.nextDouble() ;
+//
+//            addData(data, formattedDate, value);
+//        }
+//
+//        DatePicker datePicker = new DatePicker();
+//        Spinner<Double> valuePicker = new Spinner<>(0.0, 1.0, 0, 0.1);
+//        valuePicker.setEditable(true);
+//
+//        Button addButton = new Button("Add");
+//        addButton.setOnAction(e -> addData(data, formatter.format(datePicker.getValue()), valuePicker.getValue()));
+//
+//        HBox controls = new HBox(5, datePicker, valuePicker, addButton);
+//        controls.setAlignment(Pos.CENTER);
+//        controls.setPadding(new Insets(5));
+//
+//        BorderPane root = new BorderPane(chart, null, null, controls, null);
+//        primaryStage.setScene(new Scene(root, 600, 600));
+//        primaryStage.show();
     }
 
     private void addData(ObservableList<Data<String, Number>> data, String formattedDate, double value) {
