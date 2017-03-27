@@ -4,9 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import Model.Login;
-import Model.Stock;
 import View.LoginView;
-import View.StockView;
 
 public class LoginController {
 	 private LoginView loginView;

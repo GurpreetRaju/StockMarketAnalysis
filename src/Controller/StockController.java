@@ -8,7 +8,6 @@ import View.StockView;
 
 public class StockController {
 	private StockView theview;
-	@SuppressWarnings("unused")
 	private Stock themodel;
 	
 	public StockController(){
