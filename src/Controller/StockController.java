@@ -8,7 +8,6 @@ import View.StockView;
 
 public class StockController {
 	private StockView theview;
-	@SuppressWarnings("unused")
 	private Stock themodel;
 	
 	public StockController(){
@@ -25,7 +24,7 @@ public class StockController {
 			//String[] time = {"01,28,2016", "02,28,2017"};
 			theview.setVisible(false);
 	          @SuppressWarnings("unused")
-			TechnicalAnalysisController taController = new TechnicalAnalysisController(companyName, time, companyCode);
+			TechnicalAnalysisController taController = new TechnicalAnalysisController();
 	    }
 	}
 }

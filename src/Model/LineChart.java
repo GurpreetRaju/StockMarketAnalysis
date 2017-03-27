@@ -22,6 +22,7 @@ public class LineChart implements Chart{
 	private String[] timePeriod = new String[2];
 	private String company = new String();
 	private LinkedList<String[]> data;
+	private SMAIndicator shortMA = new SMAIndicator();
 	
 	private JFreeChart lineChart;
 	private TimeSeriesCollection dataset;
@@ -67,11 +68,11 @@ public class LineChart implements Chart{
 		return dataset;
 	}
 	
-	public void updateDataset(int n){
+	public void updateDataset(int i){
 		
-		LinkedList<String[]> listMA = new SMAIndicator().calculateMA(data, n);
+		LinkedList<String[]> listMA = shortMA.calculateMA(data, i);
 		
-		TimeSeries series2 = new TimeSeries(n + " Day MA");
+		TimeSeries series2 = new TimeSeries(i+ " Day MA");
 		
 		while(!listMA.isEmpty())
 		{
@@ -81,6 +82,20 @@ public class LineChart implements Chart{
 		TimeSeriesCollection dataset = (TimeSeriesCollection) lineChart.getXYPlot().getDataset();
 		dataset.addSeries(series2);
 		lineChart.getXYPlot().setDataset(dataset);
+	}
+	
+	public String indicatorSignal(){
+		boolean buy = shortMA.getBuySignal();
+		boolean sell = shortMA.getSellSignal();
+		if(buy){
+			return "buy";
+		}
+		else if(sell){
+			return "sell";
+		}
+		else{
+			return "none";
+		}
 	}
 	
 	

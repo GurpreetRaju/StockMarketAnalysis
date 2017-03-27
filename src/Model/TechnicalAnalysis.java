@@ -1,20 +1,18 @@
 package Model;
 
-import org.jfree.chart.JFreeChart;/*
-import eu.verdelhan.ta4j.TimeSeries;
-
-import eu.verdelhan.ta4j.indicators.simple.ClosePriceIndicator;
-import eu.verdelhan.ta4j.indicators.trackers.SMAIndicator;
-import eu.verdelhan.ta4j.Trade;*/
+import org.jfree.chart.JFreeChart;
 
 public class TechnicalAnalysis{
 	//private SMAIndicator maIndicator = new SMAIndicator();
 	private LineChart chart = null;
+	private Stock newStock = new Stock();
 		
-	public JFreeChart performAnalysis(String companyName, String[] timeperiod, String companyCode){
+	public JFreeChart performAnalysis(String companyName, String startDate, String currentDate){
 		try{
-			System.out.println("Call to maIndicator");
-			chart = new LineChart(companyName, timeperiod, companyCode);
+			String[] timeperiod = new String[2];
+			timeperiod[0] = startDate;
+			timeperiod[1] = currentDate;
+			chart = new LineChart(companyName, timeperiod, newStock.getStockCode(companyName));
 		}
 		catch(Exception e){
 			
@@ -24,23 +22,12 @@ public class TechnicalAnalysis{
 		return jfree;
 	}
 	
-	public void addMA(int n){
-		chart.updateDataset(n);
+	public void addMA(int i){
+		chart.updateDataset(i);
 	}
-	
-	/*public Boolean analysisMA(){
-		TimeSeries seriesMA = (TimeSeries) new org.jfree.data.time.TimeSeries(n + " days MA");
-		
-		Rule buyingRule = new CrossedUpIndicatorRule(shortSma, seriesMA);
 
-		// Selling rules
-		// We want to sell:
-		//  - if the 5-ticks SMA crosses under 30-ticks SMA
-		//  - or if if the price looses more than 3%
-		//  - or if the price earns more than 2%
-		Rule sellingRule = new CrossedDownIndicatorRule(shortSma, longSma));
-		
-		return true;
-	}*/
+	public String[] getStockList(){
+		return newStock.getStockList();
+	}
 	
 }
