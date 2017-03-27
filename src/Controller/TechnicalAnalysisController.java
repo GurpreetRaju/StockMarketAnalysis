@@ -36,15 +36,16 @@ public class TechnicalAnalysisController {
 		this.taview.setChart(jfree);
 		//this.taview.validate();
 		this.taview.setVisible(true);
-		this.taview.AddBtnActionPerformed(new MAListener());	
+		this.taview.AddBtnActionPerformed(new MAListener());
 	}
 	
 	private class MAListener implements ActionListener{
 		
 		public void actionPerformed(ActionEvent e) {
-			int maValue = taview.getSpinnerValue();
-			tamodel.addMA(maValue);
+			//int maValue = taview.getSpinnerValue();
+			tamodel.addMA(21);
 		}
+		
 	}
 	
 	public static void main(String[] arg){
