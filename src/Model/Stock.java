@@ -1,6 +1,7 @@
 package Model;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -27,7 +28,13 @@ public class Stock {
 	}
 	
 	private void initializeList() throws IOException{
+<<<<<<< HEAD
 		BufferedReader in = new BufferedReader(new FileReader("src/stocklist.csv"));
+=======
+        String filePath = new File("").getAbsolutePath();
+		System.out.println(filePath);
+		BufferedReader in = new BufferedReader(new FileReader("resources/stocklist.csv"));
+>>>>>>> origin/master
         String inputLine;
         while ((inputLine = in.readLine()) != null) 
         {

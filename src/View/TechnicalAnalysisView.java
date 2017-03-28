@@ -1,9 +1,20 @@
 package View;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Properties;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -23,9 +34,12 @@ public class TechnicalAnalysisView extends JFrame {
     private JPanel stockOptionsPanel;
     private JComboBox<String> stocklist;
     private JLabel from;
-    private JTextField fromField;
+    //    private JTextField fromField;
+    private JSpinner fromDate;
     private JLabel to;
-    private JTextField toField;
+    //    private JTextField toField;
+    private JSpinner toDate;
+    private JButton updateBtn;
 
     private JPanel wChartPanel;
     private ChartPanel chartPanel;
@@ -45,7 +59,7 @@ public class TechnicalAnalysisView extends JFrame {
     private JLabel watchListPlaceholder;
 
     private JPanel controlsPanel;
-    private JLabel errorMessage;
+    private JLabel messageLable;
     private JButton closeBtn;
 
 
@@ -53,11 +67,28 @@ public class TechnicalAnalysisView extends JFrame {
     private JButton BackBtn;
     private JButton addStockBtn;
 
-    public TechnicalAnalysisView(String[] newListString) {
-        initComponents(newListString);
+    public TechnicalAnalysisView() {
+        initComponents();
     }
 
-    private void initComponents(String[] newListString) {
+    public TechnicalAnalysisView(String[] stockList) {
+        initComponents();
+    }
+
+
+    private void initComponents() {
+        //Todo: move to function
+        ActionListener actionListener = new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
+                boolean selected = abstractButton.getModel().isSelected();
+                String el = new String();
+                el = ((AbstractButton) actionEvent.getSource()).getName().toString();
+                messageLable.setText(el);
+//                System.out.println(selected);
+//                System.out.println(el);
+            }
+        };
 
         // Declare View
         stockPanel = new JPanel();
@@ -67,12 +98,71 @@ public class TechnicalAnalysisView extends JFrame {
         stockOptionsPanel = new JPanel();
         stockOptionsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
-        from = new JLabel("From:");
-        to = new JLabel("To:");
-        stocklist = new JComboBox<String>(newListString);
+        stocklist = new JComboBox<String>(listString);
         // :Todo change to dates http://docs.oracle.com/javase/tutorial/uiswing/components/spinner.html
-        fromField = new JTextField("MM,DD,YYYY", 10);
-        toField = new JTextField("MM,DD,YYYY", 10);
+        from = new JLabel("From:");
+
+        Calendar calendar = new GregorianCalendar();
+        Date toStockDate = calendar.getTime();
+
+        calendar.add(Calendar.YEAR, -1);
+        Date fromStockDate = calendar.getTime();
+
+        //Todo: change earliestDate to first date of stock history
+        calendar.add(Calendar.YEAR, -10);
+        Date earliestStockDate = calendar.getTime();
+
+
+//        fromField = new JTextField("MM,DD,YYYY", 10);
+//        toField = new JTextField("MM,DD,YYYY", 10);
+
+        SpinnerDateModel toSpinnerDateModel = new SpinnerDateModel(
+                toStockDate, //current
+                earliestStockDate, //first
+                toStockDate, //last
+                Calendar.MONTH);
+
+        SpinnerDateModel fromSpinnerDateModel = new SpinnerDateModel(
+                fromStockDate,
+                earliestStockDate,
+                toStockDate,
+                Calendar.MONTH);
+
+//        ChangeListener dateListener = new ChangeListener() {
+//            public void stateChanged(ChangeEvent e) {
+//                System.out.println(fromDate.toString());
+//                System.out.println(toDate.toString());
+//            }
+//        };
+//        FocusListener myFocusListener = new FocusListener() {
+//            public void focusGained(java.awt.event.FocusEvent focusEvent) {
+//                System.out.println("focusGained");
+//                System.out.println(fromDate.toString());
+//                System.out.println(toDate.toString());
+//            }
+//
+//            public void focusLost(java.awt.event.FocusEvent focusEvent) {
+//                System.out.println("focusLost");
+//                System.out.println(fromDate.toString());
+//                System.out.println(toDate.toString());
+//            }
+//        };
+        fromDate = new JSpinner();
+        fromDate.setModel(fromSpinnerDateModel);
+//        fromDate.addChangeListener(dateListener);
+//        fromDate.addFocusListener(myFocusListener);
+
+        to = new JLabel("To:");
+        toDate = new JSpinner();
+        toDate.setModel(toSpinnerDateModel);
+//        toDate.addChangeListener(dateListener);
+//        toDate.addFocusListener(myFocusListener);
+
+        updateBtn = new JButton();
+        updateBtn.setText("Update");
+        updateBtn.setName("Update");
+//        updateBtn.addActionListener(e -> System.out.println("Update Button"));
+        updateBtn.addActionListener(actionListener);
 
         wChartPanel = new JPanel();
         wChartPanel.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -94,9 +184,18 @@ public class TechnicalAnalysisView extends JFrame {
         analysisLabel.setText("Analysis");
         analysisLabel.setName("analysisLabel");
 
+
         shortChBox = new JCheckBox("Short-term");
+        shortChBox.addActionListener(actionListener);
+        shortChBox.setName("shortChBox");
+
         midCBhox = new JCheckBox("Medium-term");
+        midCBhox.addActionListener(actionListener);
+        midCBhox.setName("midCBhox");
+
         longChBox = new JCheckBox("Long-term");
+        longChBox.addActionListener(actionListener);
+        longChBox.setName("longChBox");
 
 
         MAlabel = new JLabel("Add Moving average");
@@ -113,6 +212,8 @@ public class TechnicalAnalysisView extends JFrame {
 
         controlsPanel = new JPanel();
         controlsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+
+        messageLable = new JLabel();
 
         closeBtn = new JButton();
         closeBtn.setText("Close");
@@ -145,9 +246,12 @@ public class TechnicalAnalysisView extends JFrame {
 
         stockOptionsPanel.add(stocklist);
         stockOptionsPanel.add(from);
-        stockOptionsPanel.add(fromField);
+//        stockOptionsPanel.add(fromField);
+        stockOptionsPanel.add(fromDate);
         stockOptionsPanel.add(to);
-        stockOptionsPanel.add(toField);
+//        stockOptionsPanel.add(toField);
+        stockOptionsPanel.add(toDate);
+        stockOptionsPanel.add(updateBtn);
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
@@ -158,7 +262,7 @@ public class TechnicalAnalysisView extends JFrame {
         gbc.gridy = 1;
         gbc.gridwidth = 2;
         gbc.gridheight = 6;
-        this.add(wChartPanel,gbc);
+        this.add(wChartPanel, gbc);
 
 
         watchListPanel.add(watchListPlaceholder);
@@ -178,6 +282,7 @@ public class TechnicalAnalysisView extends JFrame {
         gbc.gridheight = 2;
         this.add(analysisPanel, gbc);
 
+        controlsPanel.add(messageLable);
         controlsPanel.add(closeBtn);
         gbc.gridx = 0;
         gbc.gridy = 9;
@@ -191,10 +296,6 @@ public class TechnicalAnalysisView extends JFrame {
     public int getSpinnerValue() {
         return (int) MAbox.getValue();
     }
-    
-    public String getStock() {		
-		return (String) stocklist.getSelectedItem();
-	}
 
     public void setChart(JFreeChart chart) {
         chartPanel = new ChartPanel(chart);
@@ -209,4 +310,7 @@ public class TechnicalAnalysisView extends JFrame {
         addMA.addActionListener(evt);
     }
 
+    public String getStock() {
+        return "";
+    }
 }
