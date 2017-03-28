@@ -53,11 +53,16 @@ public class TechnicalAnalysisView extends JFrame {
     private JButton BackBtn;
     private JButton addStockBtn;
 
-    public TechnicalAnalysisView(String[] newListString) {
-        initComponents(newListString);
+    public TechnicalAnalysisView() {
+        initComponents();
     }
 
-    private void initComponents(String[] newListString) {
+    public TechnicalAnalysisView(String[] stockList) {
+        initComponents();
+    }
+
+
+    private void initComponents() {
 
         // Declare View
         stockPanel = new JPanel();
@@ -69,7 +74,7 @@ public class TechnicalAnalysisView extends JFrame {
 
         from = new JLabel("From:");
         to = new JLabel("To:");
-        stocklist = new JComboBox<String>(newListString);
+        stocklist = new JComboBox<String>(listString);
         // :Todo change to dates http://docs.oracle.com/javase/tutorial/uiswing/components/spinner.html
         fromField = new JTextField("MM,DD,YYYY", 10);
         toField = new JTextField("MM,DD,YYYY", 10);
@@ -158,7 +163,7 @@ public class TechnicalAnalysisView extends JFrame {
         gbc.gridy = 1;
         gbc.gridwidth = 2;
         gbc.gridheight = 6;
-        this.add(wChartPanel,gbc);
+        this.add(wChartPanel, gbc);
 
 
         watchListPanel.add(watchListPlaceholder);
@@ -191,10 +196,6 @@ public class TechnicalAnalysisView extends JFrame {
     public int getSpinnerValue() {
         return (int) MAbox.getValue();
     }
-    
-    public String getStock() {		
-		return (String) stocklist.getSelectedItem();
-	}
 
     public void setChart(JFreeChart chart) {
         chartPanel = new ChartPanel(chart);
@@ -209,4 +210,7 @@ public class TechnicalAnalysisView extends JFrame {
         addMA.addActionListener(evt);
     }
 
+    public String getStock() {
+        return "";
+    }
 }

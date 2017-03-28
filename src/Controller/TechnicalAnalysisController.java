@@ -32,7 +32,6 @@ public class TechnicalAnalysisController {
 		String stock = this.taview.getStock();
 		JFreeChart jfree = this.tamodel.performAnalysis(stock, toString(startDate), toString(currentDate));
 		this.taview.setChart(jfree);
-		
 	}
 	
 	private void defaultTimeperiod(){
@@ -59,6 +58,6 @@ public class TechnicalAnalysisController {
 	
 	public static void main(String[] arg){
 		//String[] time = {"01,28,2016", "02,28,2017"};
-		//TechnicalAnalysisController ta = new TechnicalAnalysisController("Google", time, "GOOGL");
+		TechnicalAnalysisController ta = new TechnicalAnalysisController();
 	}
 }
