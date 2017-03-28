@@ -1,13 +1,11 @@
 # Java Project
 # Java class files
-*.class
-
 # generated files
-bin/
 
+/bin
+/.project
+/.classpath
 # Eclipse project files
-.classpath
-.project
 
 # Intellij project files
 *.iml
@@ -66,7 +64,3 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
-/.project
-/.classpath
-/bin/
-
