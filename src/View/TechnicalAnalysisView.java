@@ -68,15 +68,15 @@ public class TechnicalAnalysisView extends JFrame {
     private JButton addStockBtn;
 
     public TechnicalAnalysisView() {
-        initComponents();
+        //initComponents();
     }
 
     public TechnicalAnalysisView(String[] stockList) {
-        initComponents();
+        initComponents(stockList);
     }
 
 
-    private void initComponents() {
+    private void initComponents(String[] listString) {
         //Todo: move to function
         ActionListener actionListener = new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
@@ -311,6 +311,6 @@ public class TechnicalAnalysisView extends JFrame {
     }
 
     public String getStock() {
-        return "";
+        return (String) stocklist.getSelectedItem();
     }
 }
