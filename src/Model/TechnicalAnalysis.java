@@ -15,8 +15,8 @@ public class TechnicalAnalysis{
 			chart = new LineChart(companyName, timeperiod, newStock.getStockCode(companyName));
 		}
 		catch(Exception e){
-			
-		}
+            System.out.println("performAnalysis Exception");
+        }
 		JFreeChart jfree = chart.getChart();
 
 		return jfree;
