@@ -30,6 +30,8 @@ public class TechnicalAnalysisController {
 	
 	private void setChart(){
 		String stock = this.taview.getStock();
+
+		System.out.print("Chechpoint stock" + stock);
 		JFreeChart jfree = this.tamodel.performAnalysis(stock, toString(startDate), toString(currentDate));
 		this.taview.setChart(jfree);
 		
