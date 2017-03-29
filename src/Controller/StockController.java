@@ -18,8 +18,9 @@ public class StockController {
 	
 	class ListenerStock implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
+			@SuppressWarnings("unused")
 			String[] time = theview.getTime();
-			String companyName = "CompanyName";
+			@SuppressWarnings("unused")
 			String companyCode = themodel.getStockCode(theview.getStock());
 			//String[] time = {"01,28,2016", "02,28,2017"};
 			theview.setVisible(false);

@@ -21,7 +21,9 @@ public class TechnicalAnalysisController {
 	private TechnicalAnalysisView taview;
 	private TechnicalAnalysis tamodel;
 	private ActionListener updateBtnListener;
-	private ActionListener checkBoxesListener;
+	private ActionListener shortCheckboxListener;
+	private ActionListener midCheckboxListener;
+	private ActionListener longCheckboxListener;
 	private ActionListener menuExitListner;
 
 	public TechnicalAnalysisController(){
@@ -44,26 +46,36 @@ public class TechnicalAnalysisController {
 		};
 		taview.addUdateBtnListner(updateBtnListener);
 
-		checkBoxesListener = new ActionListener() {
+		shortCheckboxListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String el = ((AbstractButton) e.getSource()).getName().toString();
 				taview.setLabelText(el);
-				switch(el){
-					case "shortChBox":
-						checkState(21,e);
-					case "midCBhox":
-						checkState(55,e);
-					case "longChBox":
-						checkState(100,e);
-				}
+				checkState(21,e);
 			}
 			
-			private void checkState(int i, ActionEvent e){
-				if(((AbstractButton) e.getSource()).isSelected()){tamodel.addMA(i);}
-			};
 		};
-		taview.addCheckboxesListner(checkBoxesListener);
+		taview.addShortCheckboxListner(shortCheckboxListener);
+		midCheckboxListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String el = ((AbstractButton) e.getSource()).getName().toString();
+				taview.setLabelText(el);
+				checkState(55,e);
+			}
+			
+		};
+		taview.addMidCheckboxListner(midCheckboxListener);
+		longCheckboxListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String el = ((AbstractButton) e.getSource()).getName().toString();
+				taview.setLabelText(el);
+				checkState(100,e);
+			}
+			
+		};
+		taview.addLongCheckboxListner(longCheckboxListener);
 
 		menuExitListner = new ActionListener() {
 			@Override
@@ -73,6 +85,15 @@ public class TechnicalAnalysisController {
 		};
 		taview.addMenuExitListner(menuExitListner);
 	}
+	
+	public void checkState(int i, ActionEvent e){
+		if(((AbstractButton) e.getSource()).isSelected()){
+			tamodel.addMA(i);
+		}
+		else{
+			tamodel.removeMA(i);
+		}
+	};
 
 	private void setChart(){
 		String stock = this.taview.getStockSelected();

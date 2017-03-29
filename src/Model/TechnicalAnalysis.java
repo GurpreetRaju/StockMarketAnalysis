@@ -24,11 +24,24 @@ public class TechnicalAnalysis{
 	}
 	
 	public void addMA(int i){
-		chart.updateDataset(i);
+		if(!chart.isSeriesExist(i)){
+			chart.updateDataset(i);
+		}
 	}
 
 	public String[] getStockList(){
 		return newStock.getStockList();
+	}
+	
+	private JFreeChart getChart(){
+		JFreeChart jfreechart = chart.getChart();
+		return jfreechart;
+	}
+
+	public void removeMA(int i) {
+		if(chart.isSeriesExist(i)){
+			chart.removeSeries(i);
+		}		
 	}
 	
 }

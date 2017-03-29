@@ -281,12 +281,19 @@ public class TechnicalAnalysisView extends JFrame {
 
     //Listeners
     public void addUdateBtnListner(ActionListener actionListener) {
-        updateBtn.addActionListener(actionListener);
+    	shortChBox.setSelected(false);
+        midCBhox.setSelected(false);
+        longChBox.setSelected(false);
+    	updateBtn.addActionListener(actionListener);
     }
 
-    public void addCheckboxesListner(ActionListener actionListener) {
+    public void addShortCheckboxListner(ActionListener actionListener) {
         shortChBox.addActionListener(actionListener);
+    }
+    public void addMidCheckboxListner(ActionListener actionListener) {
         midCBhox.addActionListener(actionListener);
+    }
+    public void addLongCheckboxListner(ActionListener actionListener) {
         longChBox.addActionListener(actionListener);
     }
 
@@ -312,16 +319,6 @@ public class TechnicalAnalysisView extends JFrame {
         downImage = new ImageIcon(downImagePath);
     }
 
-
-    //Todo Check and delete if not needed
-//    public void AddBtnActionPerformed(ActionListener evt) {
-//        addMA.addActionListener(evt);
-//    }
-
-    public int getSpinnerValue() {
-        return (int) MAbox.getValue();
-    }
-
     public void setChart(JFreeChart chart) {
     	chartPanel = new ChartPanel(chart);
         chartPanel.setSize(wChartPanel.getPreferredSize());
@@ -333,5 +330,4 @@ public class TechnicalAnalysisView extends JFrame {
         wChartPanel.revalidate();
         wChartPanel.repaint();
     }
-
 }

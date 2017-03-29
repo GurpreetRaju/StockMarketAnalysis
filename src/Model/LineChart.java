@@ -79,7 +79,7 @@ public class LineChart implements Chart{
 			String[] elt2 = listMA.remove();
 			((TimeSeries) series2).add(new Day(toDate(elt2[0])),Float.parseFloat(elt2[1]));
 		}
-		TimeSeriesCollection dataset = (TimeSeriesCollection) lineChart.getXYPlot().getDataset();
+		dataset = (TimeSeriesCollection) lineChart.getXYPlot().getDataset();
 		dataset.addSeries(series2);
 		lineChart.getXYPlot().setDataset(dataset);
 	}
@@ -111,6 +111,17 @@ public class LineChart implements Chart{
 	        e.printStackTrace();
 	    }
 		return date;
+	}
+
+	public boolean isSeriesExist(int i) {
+		if(dataset.getSeries(i+" Day MA")!=null){
+			return true;
+		}
+		return false;
+	}
+
+	public void removeSeries(int i) {
+		dataset.removeSeries(dataset.getSeriesIndex(i+" Day MA"));
 	}
 		
 }
