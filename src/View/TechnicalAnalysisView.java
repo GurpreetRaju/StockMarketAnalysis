@@ -1,20 +1,11 @@
 package View;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Properties;
-
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -27,7 +18,13 @@ import org.jfree.chart.JFreeChart;
 public class TechnicalAnalysisView extends JFrame {
 
     private static final long serialVersionUID = 494000442742952620L;
-    private String[] listString = {"Google", "IBM", "Microsoft"};
+
+    private String[][] watchListEntitiesFake = {{"Google", "up"}, {"IBM", "down"}, {"Microsoft", "up"}};
+
+    // Set up the menus
+    private JMenuBar menuBar;
+    private JMenu menuFile;
+    private JMenuItem menuExit;
 
     private JPanel stockPanel;
 
@@ -51,15 +48,22 @@ public class TechnicalAnalysisView extends JFrame {
     private JCheckBox midCBhox;
     private JCheckBox longChBox;
 
-    private JSpinner MAbox;
-    private JButton addMA;
-    private JLabel MAlabel;
-
     private JPanel watchListPanel;
     private JLabel watchListPlaceholder;
+    private JPanel tempJPanel;
+
+    //Todo Cite the icons.
+    //License: Linkware (Backlink to http://www.visualpharm.com required)
+    //Commercial usage: Allowed (Backlink to http://www.visualpharm.com required)
+
+    private ImageIcon upImage;
+    private String upImagePath = "resources/Stock-Index-Up-icon_16.png";
+    private ImageIcon downImage;
+    private String downImagePath = "resources/Stock-Index-Down-icon_16.png";
+//    private LinkedList<JPanel> watchListEntities;
 
     private JPanel controlsPanel;
-    private JLabel messageLable;
+    private JLabel messageLabel;
     private JButton closeBtn;
 
 
@@ -67,39 +71,34 @@ public class TechnicalAnalysisView extends JFrame {
     private JButton BackBtn;
     private JButton addStockBtn;
 
-    public TechnicalAnalysisView() {
-        //initComponents();
-    }
-
     public TechnicalAnalysisView(String[] stockList) {
         initComponents(stockList);
     }
 
-
     private void initComponents(String[] listString) {
-        //Todo: move to function
-        ActionListener actionListener = new ActionListener() {
-            public void actionPerformed(ActionEvent actionEvent) {
-                AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
-                boolean selected = abstractButton.getModel().isSelected();
-                String el = new String();
-                el = ((AbstractButton) actionEvent.getSource()).getName().toString();
-                messageLable.setText(el);
-//                System.out.println(selected);
-//                System.out.println(el);
-            }
-        };
 
-        // Declare View
+        // Declare Views
+
+        // Set up the menus
+        menuBar = new JMenuBar();
+
+        //Create the menubar
+        menuFile = new JMenu("File");
+        menuBar.add(menuFile);
+        menuExit = new JMenuItem("Exit");
+        menuFile.add(menuExit);
+        this.setJMenuBar(menuBar);
+        // build the menu
+
+        // Stock Panel
         stockPanel = new JPanel();
         stockPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
-
+        // Stock Panel : Stock, date and update botton.
         stockOptionsPanel = new JPanel();
         stockOptionsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
         stocklist = new JComboBox<String>(listString);
-        // :Todo change to dates http://docs.oracle.com/javase/tutorial/uiswing/components/spinner.html
         from = new JLabel("From:");
 
         Calendar calendar = new GregorianCalendar();
@@ -108,13 +107,11 @@ public class TechnicalAnalysisView extends JFrame {
         calendar.add(Calendar.YEAR, -1);
         Date fromStockDate = calendar.getTime();
 
+        //Todo change to dates http://docs.oracle.com/javase/tutorial/uiswing/components/spinner.html
         //Todo: change earliestDate to first date of stock history
         calendar.add(Calendar.YEAR, -10);
         Date earliestStockDate = calendar.getTime();
 
-
-//        fromField = new JTextField("MM,DD,YYYY", 10);
-//        toField = new JTextField("MM,DD,YYYY", 10);
 
         SpinnerDateModel toSpinnerDateModel = new SpinnerDateModel(
                 toStockDate, //current
@@ -128,52 +125,27 @@ public class TechnicalAnalysisView extends JFrame {
                 toStockDate,
                 Calendar.MONTH);
 
-//        ChangeListener dateListener = new ChangeListener() {
-//            public void stateChanged(ChangeEvent e) {
-//                System.out.println(fromDate.toString());
-//                System.out.println(toDate.toString());
-//            }
-//        };
-//        FocusListener myFocusListener = new FocusListener() {
-//            public void focusGained(java.awt.event.FocusEvent focusEvent) {
-//                System.out.println("focusGained");
-//                System.out.println(fromDate.toString());
-//                System.out.println(toDate.toString());
-//            }
-//
-//            public void focusLost(java.awt.event.FocusEvent focusEvent) {
-//                System.out.println("focusLost");
-//                System.out.println(fromDate.toString());
-//                System.out.println(toDate.toString());
-//            }
-//        };
+
         fromDate = new JSpinner();
         fromDate.setModel(fromSpinnerDateModel);
-//        fromDate.addChangeListener(dateListener);
-//        fromDate.addFocusListener(myFocusListener);
 
         to = new JLabel("To:");
         toDate = new JSpinner();
         toDate.setModel(toSpinnerDateModel);
-//        toDate.addChangeListener(dateListener);
-//        toDate.addFocusListener(myFocusListener);
 
         updateBtn = new JButton();
         updateBtn.setText("Update");
         updateBtn.setName("Update");
-//        updateBtn.addActionListener(e -> System.out.println("Update Button"));
-        updateBtn.addActionListener(actionListener);
 
+        // Stock Panel : Stock chart.
         wChartPanel = new JPanel();
         wChartPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
         wChartPanel.setName("wChartPanel");
         wChartPanel.validate();
         wChartPanel.setPreferredSize(new Dimension(800, 600));
-//        SpringLayout wChartPanelLayout = new SpringLayout();
-//        wChartPanel.setLayout(wChartPanelLayout);
 
-
+        // Stock Panel : Analysis panel, Recommendation label, strategy checkboxes.
         analysisPanel = new JPanel();
         analysisPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
@@ -186,34 +158,25 @@ public class TechnicalAnalysisView extends JFrame {
 
 
         shortChBox = new JCheckBox("Short-term");
-        shortChBox.addActionListener(actionListener);
         shortChBox.setName("shortChBox");
 
         midCBhox = new JCheckBox("Medium-term");
-        midCBhox.addActionListener(actionListener);
         midCBhox.setName("midCBhox");
 
         longChBox = new JCheckBox("Long-term");
-        longChBox.addActionListener(actionListener);
         longChBox.setName("longChBox");
 
-
-        MAlabel = new JLabel("Add Moving average");
-        MAbox = new JSpinner(new SpinnerNumberModel(5, 0, 360, 1));
-        addMA = new JButton();
-
-
+        // Watch list Panel.
         watchListPanel = new JPanel();
         watchListPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
-        watchListPlaceholder = new JLabel("Watch List Placeholder very very width .... " +
-                "I'll add list with pictures.");
+        watchListPlaceholder = new JLabel("Watch List Placeholder very very width .... ");
 
-
+        // Control Panel.
         controlsPanel = new JPanel();
         controlsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
-        messageLable = new JLabel();
+        messageLabel = new JLabel();
 
         closeBtn = new JButton();
         closeBtn.setText("Close");
@@ -225,92 +188,144 @@ public class TechnicalAnalysisView extends JFrame {
         nextBtn = new JButton();
         nextBtn.setText("Next");
 
-        BackBtn = new JButton();
         addStockBtn = new JButton();
         addStockBtn.setText("Add Stock");
 
+        BackBtn = new JButton();
         BackBtn.setText("Back");
-        addMA.setText("ADD");
 
-        //Build view https://examples.javacodegeeks.com/desktop-java/swing/java-swing-layout-example/
+//        addMA.setText("ADD");
+
+//Build view https://examples.javacodegeeks.com/desktop-java/swing/java-swing-layout-example/
+
+
+        //Setting Panels
+
         GridBagLayout layout = new GridBagLayout();
         GridBagConstraints gbc = new GridBagConstraints();
 
         //https://docs.oracle.com/javase/7/docs/api/java/awt/GridBagConstraints.html
         gbc.fill = GridBagConstraints.BOTH;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-
         this.getContentPane().setLayout(layout);
-
 
         stockOptionsPanel.add(stocklist);
         stockOptionsPanel.add(from);
-//        stockOptionsPanel.add(fromField);
         stockOptionsPanel.add(fromDate);
         stockOptionsPanel.add(to);
-//        stockOptionsPanel.add(toField);
         stockOptionsPanel.add(toDate);
         stockOptionsPanel.add(updateBtn);
+        stockOptionsPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
         gbc.gridheight = 1;
+        gbc.weightx = 0.0;
+        gbc.weighty = 0.0;
         this.add(stockOptionsPanel, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridwidth = 2;
         gbc.gridheight = 6;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
         this.add(wChartPanel, gbc);
 
 
         watchListPanel.add(watchListPlaceholder);
-        gbc.gridx = 2;
+        loadArrowsImages();
+
+        for (String[] str : watchListEntitiesFake) {
+            tempJPanel = new JPanel();
+            tempJPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+//            tempJPanel.add(new JLabel(str[1]));
+            if (str[1].equals("up")) {
+                tempJPanel.add(new JLabel(upImage));
+            } else {
+                tempJPanel.add(new JLabel(downImage));
+            }
+            tempJPanel.add(new JLabel(str[0]));
+            watchListPanel.add(tempJPanel);
+        }
+
+        watchListPanel.setLayout(new BoxLayout(watchListPanel, BoxLayout.Y_AXIS));
+        gbc.gridx = 3;
         gbc.gridy = 0;
         gbc.gridwidth = 1;
         gbc.gridheight = 9;
+        gbc.weightx = 0.0;
+        gbc.weighty = 0.0;
         this.add(watchListPanel, gbc);
 
         analysisPanel.add(analysisLabel);
         analysisPanel.add(shortChBox);
         analysisPanel.add(midCBhox);
         analysisPanel.add(longChBox);
+        analysisPanel.add(messageLabel);
         gbc.gridx = 0;
         gbc.gridy = 7;
         gbc.gridwidth = 2;
         gbc.gridheight = 2;
+        gbc.weightx = 0.0;
+        gbc.weighty = 0.0;
         this.add(analysisPanel, gbc);
 
-        controlsPanel.add(messageLable);
-        controlsPanel.add(closeBtn);
-        gbc.gridx = 0;
-        gbc.gridy = 9;
-        gbc.gridwidth = 3;
-        gbc.gridheight = 1;
-        this.add(controlsPanel, gbc);
+//        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setSize(1280, 800);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
-    public int getSpinnerValue() {
-        return (int) MAbox.getValue();
+    //Listeners
+    public void addUdateBtnListner(ActionListener actionListener) {
+    	shortChBox.setSelected(false);
+        midCBhox.setSelected(false);
+        longChBox.setSelected(false);
+    	updateBtn.addActionListener(actionListener);
+    }
+
+    public void addShortCheckboxListner(ActionListener actionListener) {
+        shortChBox.addActionListener(actionListener);
+    }
+    public void addMidCheckboxListner(ActionListener actionListener) {
+        midCBhox.addActionListener(actionListener);
+    }
+    public void addLongCheckboxListner(ActionListener actionListener) {
+        longChBox.addActionListener(actionListener);
+    }
+
+    public void addMenuExitListner(ActionListener actionListener) {
+        menuExit.addActionListener(actionListener);
+    }
+
+    //Setters and Getters
+    public void setLabelText(String text) {
+        messageLabel.setText(text);
+    }
+
+    public Date[] getDates() {
+        return new Date[]{(Date) fromDate.getValue(), (Date) toDate.getValue()};
+    }
+
+    public String getStockSelected() {
+        return (String) stocklist.getSelectedItem();
+    }
+
+    private void loadArrowsImages() {
+        upImage = new ImageIcon(upImagePath);
+        downImage = new ImageIcon(downImagePath);
     }
 
     public void setChart(JFreeChart chart) {
-        chartPanel = new ChartPanel(chart);
+    	chartPanel = new ChartPanel(chart);
         chartPanel.setSize(wChartPanel.getPreferredSize());
         //chartPanel.setPreferredSize(new Dimension(300,300));
+        if(wChartPanel.getComponentCount() != 0){
+    		wChartPanel.removeAll();
+    	}
         wChartPanel.add(chartPanel);
         wChartPanel.revalidate();
         wChartPanel.repaint();
-    }
-
-    public void AddBtnActionPerformed(ActionListener evt) {
-        addMA.addActionListener(evt);
-    }
-
-    public String getStock() {
-        return (String) stocklist.getSelectedItem();
     }
 }
