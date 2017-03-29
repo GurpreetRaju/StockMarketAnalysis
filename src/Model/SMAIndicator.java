@@ -59,5 +59,20 @@ public class SMAIndicator{
 		}
 		return Float.parseFloat(value[4]) + sum(data,i-1,k);
 	}
+
+
+	public String indicatorSignal() {
+		boolean buy = this.getBuySignal();
+		boolean sell = this.getSellSignal();
+		if(buy){
+			return "buy";
+		}
+		else if(sell){
+			return "sell";
+		}
+		else{
+			return "none";
+		}
+	}
 	
 }

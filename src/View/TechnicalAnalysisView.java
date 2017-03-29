@@ -48,8 +48,6 @@ public class TechnicalAnalysisView extends JFrame {
     private JCheckBox midCBhox;
     private JCheckBox longChBox;
 
-    private JSpinner MAbox;
-
     private JPanel watchListPanel;
     private JLabel watchListPlaceholder;
     private JPanel tempJPanel;

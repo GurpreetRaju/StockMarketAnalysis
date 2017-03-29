@@ -33,11 +33,6 @@ public class TechnicalAnalysis{
 		return newStock.getStockList();
 	}
 	
-	private JFreeChart getChart(){
-		JFreeChart jfreechart = chart.getChart();
-		return jfreechart;
-	}
-
 	public void removeMA(int i) {
 		if(chart.isSeriesExist(i)){
 			chart.removeSeries(i);

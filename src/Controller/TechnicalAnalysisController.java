@@ -49,28 +49,24 @@ public class TechnicalAnalysisController {
 		shortCheckboxListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String el = ((AbstractButton) e.getSource()).getName().toString();
-				taview.setLabelText(el);
 				checkState(21,e);
 			}
 			
 		};
 		taview.addShortCheckboxListner(shortCheckboxListener);
+		
 		midCheckboxListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String el = ((AbstractButton) e.getSource()).getName().toString();
-				taview.setLabelText(el);
 				checkState(55,e);
 			}
 			
 		};
 		taview.addMidCheckboxListner(midCheckboxListener);
+		
 		longCheckboxListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String el = ((AbstractButton) e.getSource()).getName().toString();
-				taview.setLabelText(el);
 				checkState(100,e);
 			}
 			
@@ -89,6 +85,7 @@ public class TechnicalAnalysisController {
 	public void checkState(int i, ActionEvent e){
 		if(((AbstractButton) e.getSource()).isSelected()){
 			tamodel.addMA(i);
+			taview.setLabelText("Buy");
 		}
 		else{
 			tamodel.removeMA(i);
