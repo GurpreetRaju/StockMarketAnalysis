@@ -37,7 +37,9 @@ public class TechnicalAnalysisController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Date[] timePeriod = taview.getDates();
-				taview.setLabelText(taview.getStockSelected() + " from: " + timePeriod[0] + " to: " + timePeriod[1]);
+				//taview.setLabelText(taview.getStockSelected() + " from: " + timePeriod[0] + " to: " + timePeriod[1]);
+				JFreeChart jfree = tamodel.performAnalysis(taview.getStockSelected(), TechnicalAnalysisController.this.toString(timePeriod[0]), TechnicalAnalysisController.this.toString(timePeriod[1]));
+				taview.setChart(jfree);
 			}
 		};
 		taview.addUdateBtnListner(updateBtnListener);
@@ -47,7 +49,19 @@ public class TechnicalAnalysisController {
 			public void actionPerformed(ActionEvent e) {
 				String el = ((AbstractButton) e.getSource()).getName().toString();
 				taview.setLabelText(el);
+				switch(el){
+					case "shortChBox":
+						checkState(21,e);
+					case "midCBhox":
+						checkState(55,e);
+					case "longChBox":
+						checkState(100,e);
+				}
 			}
+			
+			private void checkState(int i, ActionEvent e){
+				if(((AbstractButton) e.getSource()).isSelected()){tamodel.addMA(i);}
+			};
 		};
 		taview.addCheckboxesListner(checkBoxesListener);
 
@@ -58,11 +72,6 @@ public class TechnicalAnalysisController {
 			}
 		};
 		taview.addMenuExitListner(menuExitListner);
-	}
-
-	public static void main(String[] arg) {
-		//String[] time = {"01,28,2016", "02,28,2017"};
-		//TechnicalAnalysisController ta = new TechnicalAnalysisController();
 	}
 
 	private void setChart(){
@@ -86,11 +95,4 @@ public class TechnicalAnalysisController {
 		return strDate;
 	}
 
-	private class MAListener implements ActionListener {
-
-		public void actionPerformed(ActionEvent e) {
-			//int maValue = taview.getSpinnerValue();
-			tamodel.addMA(21);
-		}
-	}
 }

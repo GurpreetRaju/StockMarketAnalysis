@@ -5,8 +5,6 @@ import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.LinkedList;
-
 import javax.swing.*;
 
 import org.jfree.chart.ChartPanel;
@@ -51,8 +49,6 @@ public class TechnicalAnalysisView extends JFrame {
     private JCheckBox longChBox;
 
     private JSpinner MAbox;
-    private JButton addMA;
-    private JLabel MAlabel;
 
     private JPanel watchListPanel;
     private JLabel watchListPlaceholder;
@@ -327,9 +323,12 @@ public class TechnicalAnalysisView extends JFrame {
     }
 
     public void setChart(JFreeChart chart) {
-        chartPanel = new ChartPanel(chart);
+    	chartPanel = new ChartPanel(chart);
         chartPanel.setSize(wChartPanel.getPreferredSize());
         //chartPanel.setPreferredSize(new Dimension(300,300));
+        if(wChartPanel.getComponentCount() != 0){
+    		wChartPanel.removeAll();
+    	}
         wChartPanel.add(chartPanel);
         wChartPanel.revalidate();
         wChartPanel.repaint();
