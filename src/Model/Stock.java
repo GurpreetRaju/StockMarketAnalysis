@@ -18,12 +18,16 @@ public class Stock {
 	}
 	
 	public String getStockCode(String stock) {
-		int i = stocklist.indexOf(stock);
-		return stocklist.get(i)[0];
+		for( String[] s : stocklist ){
+			if(s[1].equals(stock)){
+				return stocklist.get(stocklist.indexOf(s))[0];
+			}
+		}
+		return null;
 	}
 	
 	private void initializeList() throws IOException{
-		BufferedReader in = new BufferedReader(new FileReader("../resources/stocklist.csv"));
+		BufferedReader in = new BufferedReader(new FileReader("src/stocklist.csv"));
         String inputLine;
         while ((inputLine = in.readLine()) != null) 
         {
