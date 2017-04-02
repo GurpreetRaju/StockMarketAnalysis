@@ -2,6 +2,8 @@ package View;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -20,6 +22,7 @@ public class TechnicalAnalysisView extends JFrame {
     private static final long serialVersionUID = 494000442742952620L;
 
     private String[][] watchListEntitiesFake = {{"Google", "up"}, {"IBM", "down"}, {"Microsoft", "up"}};
+    private Dimension getScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     // Set up the menus
     private JMenuBar menuBar;
@@ -143,7 +146,7 @@ public class TechnicalAnalysisView extends JFrame {
 
         wChartPanel.setName("wChartPanel");
         wChartPanel.validate();
-        wChartPanel.setPreferredSize(new Dimension(800, 600));
+        wChartPanel.setSize(getScreenSize);;
 
         // Stock Panel : Analysis panel, Recommendation label, strategy checkboxes.
         analysisPanel = new JPanel();
@@ -316,16 +319,28 @@ public class TechnicalAnalysisView extends JFrame {
         upImage = new ImageIcon(upImagePath);
         downImage = new ImageIcon(downImagePath);
     }
+    
 
     public void setChart(JFreeChart chart) {
     	chartPanel = new ChartPanel(chart);
-        chartPanel.setSize(wChartPanel.getPreferredSize());
-        //chartPanel.setPreferredSize(new Dimension(300,300));
+        chartPanel.setSize(getScreenSize);
+        chartPanel.addComponentListener(new ComponentAdapter() {
+        	@Override
+        	public void componentResized(ComponentEvent e) {
+        	//chartPanel.updateUI();
+        	}
+		});
+        
         if(wChartPanel.getComponentCount() != 0){
     		wChartPanel.removeAll();
     	}
+        
+        chartPanel.updateUI();
         wChartPanel.add(chartPanel);
+        
+        
         wChartPanel.revalidate();
         wChartPanel.repaint();
+        wChartPanel.updateUI();
     }
 }
