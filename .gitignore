@@ -1,11 +1,13 @@
 # Java Project
 # Java class files
+*.class
 # generated files
 
+# Eclipse project files
 /bin
 /.project
 /.classpath
-# Eclipse project files
+
 
 # Intellij project files
 *.iml
