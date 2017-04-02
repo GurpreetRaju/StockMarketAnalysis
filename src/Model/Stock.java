@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 
-public class Stock {
+public class Stock extends stockComponent{
 	private String stockName = new String();
 	private String stockCode = new String();
 	private LinkedList<tick> stockData = new LinkedList<tick>();
