@@ -1,20 +1,19 @@
 package Model;
 
+import java.util.Date;
+
 import org.jfree.chart.JFreeChart;
 
 public class TechnicalAnalysis{
 	//private SMAIndicator maIndicator = new SMAIndicator();
 	private LineChart chart = null;
-	private Stock newStock = new Stock();
 		
-	public JFreeChart performAnalysis(String companyName, String startDate, String currentDate){
+	public JFreeChart performAnalysis(String companyName, Date[] timeperiod){
 			chart = null;
 			try{
-				String[] timeperiod = new String[2];
-				timeperiod[0] = startDate;
-				timeperiod[1] = currentDate;
-				System.out.print("Chechpoint 1" + newStock.getStockCode(companyName));
-				chart = new LineChart(companyName, timeperiod, newStock.getStockCode(companyName));
+				stockListReader newStockList = new stockListReader();
+				//System.out.print("Chechpoint 1" + newStockList.getStockCode(companyName));
+				chart = new LineChart(companyName, timeperiod, newStockList.getStockCode(companyName));
 			}
 			catch(Exception e){
 				System.out.print("Exception" + e);
@@ -23,14 +22,17 @@ public class TechnicalAnalysis{
 			return jfree;
 	}
 	
-	public void addMA(int i){
+	public String addMA(int i){
 		if(!chart.isSeriesExist(i)){
 			chart.updateDataset(i);
+			return chart.getIndicatorSignal(i);
 		}
+		return null;
 	}
 
 	public String[] getStockList(){
-		return newStock.getStockList();
+		stockListReader newStockList = new stockListReader();
+		return newStockList.getStockList();
 	}
 	
 	public void removeMA(int i) {

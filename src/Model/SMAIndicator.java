@@ -9,36 +9,34 @@ public class SMAIndicator{
 
 	//public SMAIndicator() {	}
 	
-	public LinkedList<String[]> calculateMA(LinkedList<String[]> data, int n){
-		LinkedList<String[]> listMA = new LinkedList<String[]>();
+	public LinkedList<tick> calculateMA(LinkedList<tick> data, int n){
+		LinkedList<tick> listMA = new LinkedList<tick>();
 		int j = data.size() - 1;
 		while(j>n){
 			System.out.println("calculateMA iteration: " + j);
 			float addition = sum(data,j,j-n+1);
 			float average = addition/n;
 			System.out.println("average " + average);
-			String[] node = new String[2];
-			String[] date = data.get(j-n+1);
-			node[0] = date[0];
-			System.out.println("date " + node[0]);
-			node[1] = String.valueOf(average);
-			listMA.add(node);
+			tick newNode = new tick();
+			tick dataNode = data.get(j-n+1);
+			newNode.setDate(dataNode.getDate());
+			newNode.setData(average);
+			listMA.add(newNode);
 			System.out.println("node added to listMA");
 			j--;
 		}
-		
-		setIndicator(data.getLast(),listMA.getLast(),listMA.get(listMA.size()-2));
-		
+		setIndicator(data.getFirst(),listMA.getLast(),listMA.get(listMA.size()-2));
 		return listMA;
 	}
 	
 	
-	private void setIndicator(String[] price, String[] currentAv, String[] prevAv){
-		if(Float.valueOf(prevAv[1])<Float.valueOf(currentAv[1]) && Float.valueOf(currentAv[1])<Float.valueOf(price[1])){
+	private void setIndicator(tick currentData, tick currentAv, tick recentAv){
+		System.out.println(recentAv.getData() + " " + currentAv.getData() + " " + currentData.getData());
+		if(recentAv.getData()<currentAv.getData() && currentAv.getData()<currentData.getData()){
 			buySignal = true;
 			sellSignal = false;
 		}
-		else if(Float.valueOf(prevAv[1])>Float.valueOf(currentAv[1]) && Float.valueOf(currentAv[1])>Float.valueOf(price[1])){
+		else if(recentAv.getData()>currentAv.getData() && currentAv.getData()>currentData.getData()){
 			buySignal = false;
 			sellSignal = true;
 		}
@@ -52,12 +50,12 @@ public class SMAIndicator{
 		return sellSignal;
 	}
 	
-	private Float sum(LinkedList<String[]> data,int i,int k){
-		String[] value = data.get(i);
+	private Float sum(LinkedList<tick> data,int i,int k){
+		tick value = data.get(i);
 		if(i==k){
-			return Float.parseFloat(value[4]);
+			return value.getData();
 		}
-		return Float.parseFloat(value[4]) + sum(data,i-1,k);
+		return value.getData() + sum(data,i-1,k);
 	}
 
 
