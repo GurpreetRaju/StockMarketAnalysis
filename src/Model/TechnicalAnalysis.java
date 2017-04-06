@@ -25,7 +25,8 @@ public class TechnicalAnalysis{
 	public String addMA(int i){
 		if(!chart.isSeriesExist(i)){
 			chart.updateDataset(i);
-			return chart.getIndicatorSignal(i);
+			String str = chart.getIndicatorSignal(i);
+			return str;
 		}
 		return null;
 	}
@@ -40,5 +41,22 @@ public class TechnicalAnalysis{
 			chart.removeSeries(i);
 		}		
 	}
-	
+//	public static void main(String[] arg){
+//		Date[] timePeriod = new Date[2];
+//		Calendar cal = Calendar.getInstance();
+//		timePeriod[1] = cal.getTime();
+//		cal.add(Calendar.YEAR, -1); // http://stackoverflow.com/questions/14946886/store-current-date-and-date-1-year-from-current-in-java
+//		timePeriod[0] = cal.getTime();
+//		TechnicalAnalysis ta = new TechnicalAnalysis();
+//		
+//		JFreeChart chart = ta.performAnalysis("Alphabet Inc.", timePeriod);
+//		JFrame frame = new JFrame();
+//		frame.setSize(600, 400);
+//		ChartPanel chartPanel = new ChartPanel(chart);
+//        chartPanel.setSize(frame.getSize());
+//        frame.add(chartPanel);
+//        frame.setVisible(true);
+//        String str = ta.addMA(20);
+//        System.out.println(str);
+//	}
 }

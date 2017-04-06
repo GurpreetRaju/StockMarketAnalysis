@@ -4,9 +4,9 @@
 # generated files
 
 # Eclipse project files
-/bin
-/.project
-/.classpath
+bin/
+.project
+.classpath
 
 
 # Intellij project files

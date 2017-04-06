@@ -46,7 +46,7 @@ public class TechnicalAnalysisController {
 		shortCheckboxListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				checkState(21,e);
+				checkState(20,e);
 			}
 			
 		};
@@ -104,6 +104,5 @@ public class TechnicalAnalysisController {
 		cal.add(Calendar.YEAR, -1); // http://stackoverflow.com/questions/14946886/store-current-date-and-date-1-year-from-current-in-java
 		defaultPeriod[0] = cal.getTime();
 	}
-
-
+	
 }

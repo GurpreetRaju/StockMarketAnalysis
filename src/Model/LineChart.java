@@ -2,6 +2,7 @@ package Model;
 
 import java.util.Date;
 import java.util.LinkedList;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.time.Day;
@@ -14,19 +15,11 @@ public class LineChart implements Chart{
 	private String yAxisLabel = "Stock price";
 	//private static Plot plot = (XYPlot) new Plot();
 	private Stock stock;
-	private LinkedList<tick> data;
-	
 	private JFreeChart lineChart;
 	private TimeSeriesCollection dataset;
 	
 	public LineChart(String companyName, Date[] time, String companyCode) {
 		stock = new Stock(companyName, companyCode, time);
-		try {
-			this.data = stock.getStockData();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		createChart();
 	}
 
@@ -42,6 +35,7 @@ public class LineChart implements Chart{
 	public TimeSeriesCollection createDataset(){
 		System.out.println("Creating dataset");
 		TimeSeries series1 = new TimeSeries("Stock");
+		LinkedList<tick> data = stock.getStockData();
 		int i = 0;
 		while(i<data.size()){
 			tick elt = data.get(i);
@@ -57,13 +51,13 @@ public class LineChart implements Chart{
 	
 	public void updateDataset(int i){
 		
-		LinkedList<tick> listMA = stock.selectMA(i).calculateMA(data, i);
+		LinkedList<tick> listMA = stock.calculateMA(i);
 		
 		TimeSeries series2 = new TimeSeries(i+ " Day MA");
 		
-		while(!listMA.isEmpty())
+		for(tick elt2 : listMA)
 		{
-			tick elt2 = listMA.remove();
+			//tick elt2 = listMA.remove();
 			((TimeSeries) series2).add(new Day(elt2.getDate()),elt2.getData());
 		}
 		dataset = (TimeSeriesCollection) lineChart.getXYPlot().getDataset();
@@ -83,7 +77,25 @@ public class LineChart implements Chart{
 	}
 	
 	public String getIndicatorSignal(int ma){
-		return stock.indicatorSignal(ma);
+		String str = stock.indicatorSignal(ma);
+		return str;
 	}
 		
+//	public static void main(String[] arg){
+//		Date[] timePeriod = new Date[2];
+//		Calendar cal = Calendar.getInstance();
+//		timePeriod[1] = cal.getTime();
+//		cal.add(Calendar.YEAR, -1); // http://stackoverflow.com/questions/14946886/store-current-date-and-date-1-year-from-current-in-java
+//		timePeriod[0] = cal.getTime();
+//		LineChart chart = new LineChart("Google", timePeriod,"GOOG");
+//		JFrame frame = new JFrame();
+//		frame.setSize(600, 400);
+//		ChartPanel chartPanel = new ChartPanel(chart.getChart());
+//        chartPanel.setSize(frame.getSize());
+//        frame.add(chartPanel);
+//        frame.setVisible(true);
+//        chart.updateDataset(20);
+//        String str = chart.getIndicatorSignal(20);
+//        System.out.println(str);
+//	}
 }
