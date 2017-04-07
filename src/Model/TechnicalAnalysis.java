@@ -8,12 +8,13 @@ public class TechnicalAnalysis{
 	//private SMAIndicator maIndicator = new SMAIndicator();
 	private LineChart chart = null;
 	private watchList wlist = new watchList();
-	private String file = "src/stocklist.csv";
-		
+	private String stockfile = "src/stocklist.csv";
+	stockListReader newStockList = new stockListReader(this.stockfile);
+	
 	public JFreeChart performAnalysis(String companyName, Date[] timeperiod){
 			chart = null;
 			try{
-				stockListReader newStockList = new stockListReader(this.file);
+				//stockListReader newStockList = new stockListReader(this.stockfile);
 				//System.out.print("Chechpoint 1" + newStockList.getStockCode(companyName));
 				chart = new LineChart(companyName, timeperiod, newStockList.getStockCode(companyName));
 			}
@@ -34,7 +35,7 @@ public class TechnicalAnalysis{
 	}
 
 	public String[] getStockList(){
-		stockListReader newStockList = new stockListReader(this.file);
+		
 		return newStockList.getStockList();
 	}
 	
@@ -49,7 +50,10 @@ public class TechnicalAnalysis{
 	}
 
 	public void addToWishlist(String stockName) {
-		stockListReader newStockList = new stockListReader(this.file);
 		wlist.addToWatchlist(stockName,newStockList.getStockCode(stockName));
+	}
+	
+	public void removeFromWatchlist(String[] delstock){
+		wlist.removeFromWatchList(delstock);
 	}
 }
