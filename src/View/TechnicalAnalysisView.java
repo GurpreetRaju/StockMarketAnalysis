@@ -1,9 +1,11 @@
 package View;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -22,7 +24,7 @@ public class TechnicalAnalysisView extends JFrame {
     private static final long serialVersionUID = 494000442742952620L;
 
    private Dimension getScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
+   private ArrayList<JCheckBox> checkBoxes = new ArrayList<JCheckBox>();
     // Set up the menus
     private JMenuBar menuBar;
     private JMenu menuFile;
@@ -54,6 +56,9 @@ public class TechnicalAnalysisView extends JFrame {
     private JPanel watchListPanel;
     private JLabel watchListPlaceholder;
     private JPanel tempJPanel;
+    
+    private JPanel watchlistOptionPanel;
+    private JButton delStock;
 
     //Todo Cite the icons.
     //License: Linkware (Backlink to http://www.visualpharm.com required)
@@ -176,7 +181,7 @@ public class TechnicalAnalysisView extends JFrame {
         watchListPanel = new JPanel();
         watchListPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
-        watchListPlaceholder = new JLabel("Watch List Placeholder very very width .... ");
+        watchListPlaceholder = new JLabel("Watch List ");
 
         // Control Panel.
         controlsPanel = new JPanel();
@@ -199,8 +204,10 @@ public class TechnicalAnalysisView extends JFrame {
 
         BackBtn = new JButton();
         BackBtn.setText("Back");
-
-//        addMA.setText("ADD");
+        
+        watchlistOptionPanel = new JPanel();
+        watchlistOptionPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        delStock = new JButton("Remove selected");
 
 //Build view https://examples.javacodegeeks.com/desktop-java/swing/java-swing-layout-example/
 
@@ -242,11 +249,11 @@ public class TechnicalAnalysisView extends JFrame {
         watchListPanel.add(watchListPlaceholder);
         loadArrowsImages();
         watchListPanel.setLayout(new BoxLayout(watchListPanel, BoxLayout.Y_AXIS));
-        gbc.gridx = 3;
+        gbc.gridx = 2;
         gbc.gridy = 0;
         gbc.gridwidth = 1;
-        gbc.gridheight = 9;
-        gbc.weightx = 0.0;
+        gbc.gridheight = 7;
+        gbc.weightx = 0.3;
         gbc.weighty = 0.0;
         this.add(watchListPanel, gbc);
 
@@ -259,9 +266,19 @@ public class TechnicalAnalysisView extends JFrame {
         gbc.gridy = 7;
         gbc.gridwidth = 2;
         gbc.gridheight = 2;
-        gbc.weightx = 0.0;
+        gbc.weightx = 1.0;
         gbc.weighty = 0.0;
         this.add(analysisPanel, gbc);
+        
+        watchlistOptionPanel.add(delStock);
+        gbc.gridx = 2;
+        gbc.gridy = 7;
+        gbc.gridwidth = 1;
+        gbc.gridheight = 2;
+        gbc.weightx = 0.3;
+        gbc.weighty = 0.0;
+        this.add(watchlistOptionPanel, gbc);
+        
 
 //        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setSize(1280, 800);
@@ -291,6 +308,10 @@ public class TechnicalAnalysisView extends JFrame {
     public void addMenuExitListner(ActionListener actionListener) {
         menuExit.addActionListener(actionListener);
     }
+    
+    public void delStockBtnListner(ActionListener actionListener) {
+       delStock.addActionListener(actionListener);
+    }
 
     //Setters and Getters
     public void resetChkboxes(){
@@ -309,6 +330,17 @@ public class TechnicalAnalysisView extends JFrame {
 
     public String getStockSelected() {
         return (String) stocklist.getSelectedItem();
+    }
+    
+    public String[] getSelectedCheckboxes(){
+    	ArrayList<String> remstocks= new ArrayList<String>();
+    	for(JCheckBox c: checkBoxes){
+    		if(c.isSelected()){
+    			remstocks.add(c.getText());
+    		}
+    	}
+    	
+    	return remstocks.toArray(new String[remstocks.size()]);
     }
 
     private void loadArrowsImages() {
@@ -341,6 +373,10 @@ public class TechnicalAnalysisView extends JFrame {
     }
     
     public void setWatchlist(String[][] watchListEntities){
+    	if(watchListPanel.getComponentCount()!=0){
+    		watchListPanel.removeAll();
+    		this.checkBoxes.clear();
+    	}
     	for (String[] str : watchListEntities) {
             tempJPanel = new JPanel();
             tempJPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -353,14 +389,32 @@ public class TechnicalAnalysisView extends JFrame {
             else{
             	tempJPanel.add(new JLabel("     "));
             }
-            tempJPanel.add(new JLabel(str[0]));
+            JCheckBox cb = new JCheckBox(str[0]);
+            cb.setHorizontalTextPosition(SwingConstants.LEFT);
+            tempJPanel.add(cb);
+            this.checkBoxes.add(cb);
             watchListPanel.add(tempJPanel);
         }
+    	watchListPanel.revalidate();
+    	watchListPanel.repaint();
+    	watchListPanel.updateUI();
     }
     
     public static void main(String[] arg){
     	String[] stockList = {"Google","Apple","Intel"};
+    	String[][] watchlist = {{"Google","buy"},{"Apple","sell"},{"Intel","buy"}};
     	TechnicalAnalysisView tv = new TechnicalAnalysisView(stockList);
+    	tv.setWatchlist(watchlist);
     	tv.setVisible(true);
+    	ActionListener delStockBtnListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String[] boxes = tv.getSelectedCheckboxes();
+				for(String s:boxes){
+					System.out.println(s);
+				}
+			}
+		};
+		tv.delStockBtnListner(delStockBtnListener);
     }
 }

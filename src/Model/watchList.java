@@ -39,6 +39,16 @@ public class watchList{
 	}
 
 	public void addToWatchlist(String stockName, String stockCode) {
-			reader.saveStock(stockName,stockCode);
+		reader.saveStock(stockName,stockCode);
+		stockComponent s1 = new Stock(stockName,stockCode);
+		((stockGroup) stocksGroup).add(s1);
+	}
+	
+	public void removeFromWatchList(String[] delStocks){
+		reader.deleteStock(delStocks);
+		for(String s : delStocks){
+			stockComponent s1 = ((stockGroup) stocksGroup).get(s);
+			stocksGroup.remove(s1);
+		}
 	}
 }

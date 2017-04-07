@@ -76,5 +76,48 @@ public class stockListReader{
 			e.printStackTrace();
 		}	
 	}
+
+	public void deleteStock(String[] delStocks) {
+		for(String nstockname : delStocks){
+			String newstock = nstockname;
+			int i = contains(newstock);
+			if(i!=-1){
+				stocklist.remove(i);
+			}
+		}		
+		try {
+			PrintWriter pw = new PrintWriter(new File(this.fileName));
+			
+			StringBuilder sb = new StringBuilder();
+			sb.append("code");
+        	sb.append(',');
+        	sb.append("name");
+        	sb.append('\n');
+	        for(String[] s:stocklist){
+	        	sb.append(s[0]);
+	        	sb.append(',');
+	        	sb.append(s[1]);
+	        	sb.append('\n');
+	        	
+	        }
+	        pw.write(sb.toString());
+	        pw.close();	
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}	
+	}
+	
+	public int contains(String newStock){
+		int i = 0;
+		int j = -1;
+		while(i < stocklist.size()){
+			if(stocklist.get(i)[1] == newStock){
+				j=i;
+				break;
+			}
+			i++;
+		}
+		return j;
+	}
 	
 }

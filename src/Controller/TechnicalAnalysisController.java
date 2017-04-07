@@ -19,6 +19,7 @@ public class TechnicalAnalysisController {
 	private TechnicalAnalysis tamodel;
 	private ActionListener updateBtnListener;
 	private ActionListener addToWishBtnListener;
+	private ActionListener delStockBtnListener;
 	private ActionListener shortCheckboxListener;
 	private ActionListener midCheckboxListener;
 	private ActionListener longCheckboxListener;
@@ -50,9 +51,19 @@ public class TechnicalAnalysisController {
 			public void actionPerformed(ActionEvent e) {
 				//taview.getStockSelected()
 				tamodel.addToWishlist(taview.getStockSelected());
+				taview.setWatchlist(tamodel.getWatchlist());
 			}
 		};
 		taview.addToWishBtnListener(addToWishBtnListener);
+		delStockBtnListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//taview.getStockSelected()
+				tamodel.removeFromWatchlist(taview.getSelectedCheckboxes());
+				taview.setWatchlist(tamodel.getWatchlist());
+			}
+		};
+		taview.delStockBtnListner(delStockBtnListener);
 
 		shortCheckboxListener = new ActionListener() {
 			@Override
