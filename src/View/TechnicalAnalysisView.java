@@ -21,8 +21,7 @@ public class TechnicalAnalysisView extends JFrame {
 
     private static final long serialVersionUID = 494000442742952620L;
 
-    private String[][] watchListEntitiesFake = {{"Google", "up"}, {"IBM", "down"}, {"Microsoft", "up"}};
-    private Dimension getScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
+   private Dimension getScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     // Set up the menus
     private JMenuBar menuBar;
@@ -237,20 +236,6 @@ public class TechnicalAnalysisView extends JFrame {
 
         watchListPanel.add(watchListPlaceholder);
         loadArrowsImages();
-
-        for (String[] str : watchListEntitiesFake) {
-            tempJPanel = new JPanel();
-            tempJPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-//            tempJPanel.add(new JLabel(str[1]));
-            if (str[1].equals("up")) {
-                tempJPanel.add(new JLabel(upImage));
-            } else {
-                tempJPanel.add(new JLabel(downImage));
-            }
-            tempJPanel.add(new JLabel(str[0]));
-            watchListPanel.add(tempJPanel);
-        }
-
         watchListPanel.setLayout(new BoxLayout(watchListPanel, BoxLayout.Y_AXIS));
         gbc.gridx = 3;
         gbc.gridy = 0;
@@ -342,5 +327,23 @@ public class TechnicalAnalysisView extends JFrame {
         wChartPanel.revalidate();
         wChartPanel.repaint();
         wChartPanel.updateUI();
+    }
+    
+    public void setWatchlist(String[][] watchListEntities){
+    	for (String[] str : watchListEntities) {
+            tempJPanel = new JPanel();
+            tempJPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+            if (str[1].equals("buy")) {
+                tempJPanel.add(new JLabel(upImage));
+                System.out.println("add buy signal");
+            } else if(str[1].equals("sell")){
+                tempJPanel.add(new JLabel(downImage));
+            }
+            else{
+            	tempJPanel.add(new JLabel("     "));
+            }
+            tempJPanel.add(new JLabel(str[0]));
+            watchListPanel.add(tempJPanel);
+        }
     }
 }

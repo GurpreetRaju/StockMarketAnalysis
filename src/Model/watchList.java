@@ -2,27 +2,39 @@ package Model;
 
 import java.util.ArrayList;
 
-public class watchList extends stockComponent{
-	ArrayList<stockComponent> stocklist = new ArrayList<stockComponent>();
+public class watchList{
+	private stockListReader reader = new stockListReader("src/watchlist.csv");
+	private stockComponent stocksGroup = new stockGroup();
 	
-	public void add(stockComponent newComponent){
-		this.stocklist.add(newComponent);
+	public watchList(){
+		initList();
 	}
 	
-	public void remove(stockComponent newComponent){
-		this.stocklist.remove(newComponent);
-	}
-		
-	public stockComponent get(String stockName){
-		for(stockComponent s: this.stocklist){
-			if(stockName.equals(s.getStockName())){
-				return s;
-			}
+	private void initList(){
+		for(String[] stock : reader.getList()){
+			stocksGroup.add(new Stock(stock[1],stock[0]));
 		}
-		return null;
 	}
 	
-	public stockComponent get(int index){
-		return this.stocklist.get(index);
+	public String[][] getWatchlistEntities(){
+		ArrayList<String[]> watchListEntities = new ArrayList<String[]>();
+		int size =((stockGroup) stocksGroup).size();
+		for(int i=0; i < size; i++){
+			Stock stock = (Stock) ((stockGroup) stocksGroup).get(i);
+			String[] str = new String[2];
+			str[0] = stock.getStockName();
+			str[1] = stock.indicatorSignal(20100);
+			watchListEntities.add(str);
+		}
+		String[][] data = toMultiArray(watchListEntities);
+		return data;
+	}
+	
+	private String[][] toMultiArray(ArrayList<String[]> list){
+		String[][] temp = new String[list.size()][2]; 
+		for(int x=0; x<list.size(); x++){
+			temp[x] = list.get(x);
+		}
+		return temp;
 	}
 }

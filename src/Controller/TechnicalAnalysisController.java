@@ -28,6 +28,7 @@ public class TechnicalAnalysisController {
 		defaultTimeperiod();
 		this.taview = new TechnicalAnalysisView(tamodel.getStockList());
 		setChart();
+		this.taview.setWatchlist(this.tamodel.getWatchlist());
 		this.taview.setVisible(true);
 //		this.taview.AddBtnActionPerformed(new MAListener());
 
