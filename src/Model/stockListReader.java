@@ -1,8 +1,12 @@
 package Model;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.LinkedList;
 
 public class stockListReader{
@@ -15,7 +19,6 @@ public class stockListReader{
 			this.fileName = newfile;
 			initializeList();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -54,6 +57,24 @@ public class stockListReader{
 	}
 	public LinkedList<String[]> getList(){
 		return this.stocklist;
+	}
+
+	public void saveStock(String stockName, String stockCode) {
+		PrintWriter pw;
+		try {
+			pw = new PrintWriter(new FileOutputStream(new File(this.fileName),true));
+		
+			StringBuilder sb = new StringBuilder();
+	        sb.append(stockCode);
+	        sb.append(',');
+	        sb.append(stockName);
+	        sb.append('\n');
+	        
+	        pw.append(sb.toString());
+	        pw.close();	
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}	
 	}
 	
 }

@@ -47,4 +47,9 @@ public class TechnicalAnalysis{
 	public String[][] getWatchlist() {
 	    return wlist.getWatchlistEntities();
 	}
+
+	public void addToWishlist(String stockName) {
+		stockListReader newStockList = new stockListReader(this.file);
+		wlist.addToWatchlist(stockName,newStockList.getStockCode(stockName));
+	}
 }

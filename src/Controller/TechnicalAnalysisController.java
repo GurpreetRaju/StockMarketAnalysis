@@ -18,6 +18,7 @@ public class TechnicalAnalysisController {
 	private TechnicalAnalysisView taview;
 	private TechnicalAnalysis tamodel;
 	private ActionListener updateBtnListener;
+	private ActionListener addToWishBtnListener;
 	private ActionListener shortCheckboxListener;
 	private ActionListener midCheckboxListener;
 	private ActionListener longCheckboxListener;
@@ -40,9 +41,18 @@ public class TechnicalAnalysisController {
 				//taview.setLabelText(taview.getStockSelected() + " from: " + timePeriod[0] + " to: " + timePeriod[1]);
 				JFreeChart jfree = tamodel.performAnalysis(taview.getStockSelected(),timePeriod);
 				taview.setChart(jfree);
+				taview.resetChkboxes();
 			}
 		};
 		taview.addUdateBtnListner(updateBtnListener);
+		addToWishBtnListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//taview.getStockSelected()
+				tamodel.addToWishlist(taview.getStockSelected());
+			}
+		};
+		taview.addToWishBtnListener(addToWishBtnListener);
 
 		shortCheckboxListener = new ActionListener() {
 			@Override
@@ -58,7 +68,6 @@ public class TechnicalAnalysisController {
 			public void actionPerformed(ActionEvent e) {
 				checkState(55,e);
 			}
-			
 		};
 		taview.addMidCheckboxListner(midCheckboxListener);
 		
