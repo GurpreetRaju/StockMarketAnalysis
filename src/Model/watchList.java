@@ -37,4 +37,8 @@ public class watchList{
 		}
 		return temp;
 	}
+
+	public void addToWatchlist(String stockName, String stockCode) {
+			reader.saveStock(stockName,stockCode);
+	}
 }

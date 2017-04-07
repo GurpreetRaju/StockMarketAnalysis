@@ -39,6 +39,7 @@ public class TechnicalAnalysisView extends JFrame {
     //    private JTextField toField;
     private JSpinner toDate;
     private JButton updateBtn;
+    private JButton addToWishBtn;
 
     private JPanel wChartPanel;
     private ChartPanel chartPanel;
@@ -138,6 +139,9 @@ public class TechnicalAnalysisView extends JFrame {
         updateBtn = new JButton();
         updateBtn.setText("Update");
         updateBtn.setName("Update");
+        
+        addToWishBtn = new JButton("Add to Wishlist");
+        addToWishBtn.setName("Add to Wishlist");
 
         // Stock Panel : Stock chart.
         wChartPanel = new JPanel();
@@ -216,6 +220,7 @@ public class TechnicalAnalysisView extends JFrame {
         stockOptionsPanel.add(to);
         stockOptionsPanel.add(toDate);
         stockOptionsPanel.add(updateBtn);
+        stockOptionsPanel.add(addToWishBtn);
         stockOptionsPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -267,10 +272,10 @@ public class TechnicalAnalysisView extends JFrame {
 
     //Listeners
     public void addUdateBtnListner(ActionListener actionListener) {
-    	shortChBox.setSelected(false);
-        midCBhox.setSelected(false);
-        longChBox.setSelected(false);
     	updateBtn.addActionListener(actionListener);
+    }
+    public void addToWishBtnListener(ActionListener actionListener){
+    	addToWishBtn.addActionListener(actionListener);
     }
 
     public void addShortCheckboxListner(ActionListener actionListener) {
@@ -288,6 +293,12 @@ public class TechnicalAnalysisView extends JFrame {
     }
 
     //Setters and Getters
+    public void resetChkboxes(){
+    	shortChBox.setSelected(false);
+    	midCBhox.setSelected(false);
+        longChBox.setSelected(false);
+    }
+    
     public void setLabelText(String text) {
         messageLabel.setText(text);
     }
@@ -335,7 +346,7 @@ public class TechnicalAnalysisView extends JFrame {
             tempJPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
             if (str[1].equals("buy")) {
                 tempJPanel.add(new JLabel(upImage));
-                System.out.println("add buy signal");
+                //System.out.println("add buy signal");
             } else if(str[1].equals("sell")){
                 tempJPanel.add(new JLabel(downImage));
             }
@@ -345,5 +356,11 @@ public class TechnicalAnalysisView extends JFrame {
             tempJPanel.add(new JLabel(str[0]));
             watchListPanel.add(tempJPanel);
         }
+    }
+    
+    public static void main(String[] arg){
+    	String[] stockList = {"Google","Apple","Intel"};
+    	TechnicalAnalysisView tv = new TechnicalAnalysisView(stockList);
+    	tv.setVisible(true);
     }
 }
