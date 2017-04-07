@@ -6,11 +6,13 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 public class stockListReader{
-
-private LinkedList<String[]> stocklist = new LinkedList<String[]>(); 
 	
-	public stockListReader(){
+	private String fileName = new String();
+	private LinkedList<String[]> stocklist = new LinkedList<String[]>(); 
+	
+	public stockListReader(String newfile){
 		try {
+			this.fileName = newfile;
 			initializeList();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -28,7 +30,7 @@ private LinkedList<String[]> stocklist = new LinkedList<String[]>();
 	}
 	
 	private void initializeList() throws IOException{
-		BufferedReader in = new BufferedReader(new FileReader("src/stocklist.csv"));
+		BufferedReader in = new BufferedReader(new FileReader(this.fileName));
         String inputLine;
         while ((inputLine = in.readLine()) != null) 
         {
@@ -49,6 +51,9 @@ private LinkedList<String[]> stocklist = new LinkedList<String[]>();
 			i++;
 		}
 		return list;
+	}
+	public LinkedList<String[]> getList(){
+		return this.stocklist;
 	}
 	
 }
