@@ -48,6 +48,18 @@ public class TechnicalAnalysisView extends JFrame {
     private JPanel wChartPanel;
     private ChartPanel chartPanel;
 
+    private JLabel legengLable;
+    private JLabel buyLable;
+    private JLabel buyLableImage;
+    private JLabel sellLable;
+    private JLabel sellLableImage;
+    private JLabel keepLable;
+    private JLabel keepLableImage;
+    private JLabel undefinedLable;
+    private JLabel undefinedLableImage;
+
+    private JPanel legendPanel;
+
     private JPanel analysisPanel;
     private JLabel analysisLabel;
     private JLabel resultLabel;
@@ -129,7 +141,8 @@ public class TechnicalAnalysisView extends JFrame {
 
         // Stock Panel
         stockPanel = new JPanel();
-        stockPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        stockPanel.setLayout(new GridBagLayout());
+//        stockPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
         // Stock Panel : Stock, date and update botton.
         stockOptionsPanel = new JPanel();
@@ -181,14 +194,29 @@ public class TechnicalAnalysisView extends JFrame {
         addToWishBtn.setName("Add to Wishlist");
 
         // Stock Panel : Stock chart.
+
+
         wChartPanel = new JPanel();
-        wChartPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+//        wChartPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         wChartPanel.setAlignmentX(JPanel.CENTER_ALIGNMENT);
         wChartPanel.setAlignmentY(JPanel.CENTER_ALIGNMENT);
 
         wChartPanel.setName("wChartPanel");
         wChartPanel.validate();
         wChartPanel.setSize(getScreenSize);
+
+
+        legengLable = new JLabel("Legend:");
+        buyLable = new JLabel("Buy");
+        buyLableImage = new JLabel(upImage);
+        sellLable = new JLabel("Sell");
+        sellLableImage = new JLabel(downImage);
+        keepLable = new JLabel("Keep");
+        keepLableImage = new JLabel(keepImage);
+        undefinedLable = new JLabel("No signal");
+        undefinedLableImage = new JLabel(unknownImage);
+
+        legendPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
         // Stock Panel : Analysis panel, Recommendation label, strategy checkboxes.
         analysisPanel = new JPanel();
@@ -295,20 +323,52 @@ public class TechnicalAnalysisView extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 3;
-        gbc.gridheight = 1;
+        gbc.gridheight = 2;
         gbc.weightx = 0.0;
         gbc.weighty = 0.0;
 
-        this.add(stockOptionsPanel, gbc);
+        stockPanel.add(stockOptionsPanel, gbc);
+
+//        this.add(stockOptionsPanel, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 3;
         gbc.gridwidth = 3;
-        gbc.gridheight = 6;
+        gbc.gridheight = 4;
         gbc.weightx = 0.9;
         gbc.weighty = 0.9;
-        this.add(wChartPanel, gbc);
+//        this.add(wChartPanel, gbc);
+        stockPanel.add(wChartPanel, gbc);
 
+        legendPanel.add(legengLable);
+        legendPanel.add(new JLabel("   "));
+        legendPanel.add(buyLableImage);
+        legendPanel.add(buyLable);
+        legendPanel.add(new JLabel("   "));
+        legendPanel.add(keepLableImage);
+        legendPanel.add(keepLable);
+        legendPanel.add(new JLabel("   "));
+        legendPanel.add(sellLableImage);
+        legendPanel.add(sellLable);
+        legendPanel.add(new JLabel("   "));
+        legendPanel.add(undefinedLableImage);
+        legendPanel.add(undefinedLable);
+
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        gbc.gridwidth = 3;
+        gbc.gridheight = 1;
+        gbc.weightx = 0.0;
+        gbc.weighty = 0.0;
+        stockPanel.add(legendPanel, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 3;
+        gbc.gridheight = 8;
+        gbc.weightx = 0.9;
+        gbc.weighty = 0.9;
+        this.add(stockPanel, gbc);
 
         watchPanel.add(watchListLabel);
         watchPanel.add(scrollPane);
@@ -411,7 +471,7 @@ public class TechnicalAnalysisView extends JFrame {
                 return upImage;
             case "sell":
                 return downImage;
-            case "hold":
+            case "keep":
                 return keepImage;
             case "none":
                 return unknownImage;

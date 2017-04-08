@@ -6,8 +6,10 @@ public class Login {
     private String password = "1";
 
     public boolean authenticate(String uid, String pwd) {
+
         System.out.println(uid);
         System.out.println(pwd);
+
         if (uid.equals(UserID) && pwd.equals(password)) {
             return true;
         }

@@ -113,7 +113,7 @@ public class Stock extends stockComponent {
         } else if (recentAv.getData() > currentAv.getData() && currentAv.getData() > currentData.getData() && currentAv.getData() > currentsmallAv.getData()) {
             return "sell";
         }
-        return "none";
+        return "keep";
     }
 
     public int getStockDataSize() {
