@@ -8,7 +8,7 @@ public class Stock extends stockComponent {
     private String stockName = new String();
     private String stockCode = new String();
     private LinkedList<tick> stockData = new LinkedList<tick>();
-    private Data data = new onlineDataReader();
+    private Data data;
 
     private SMAIndicator[] maList = new SMAIndicator[3];
     private Date[] timePeriod;
@@ -17,7 +17,8 @@ public class Stock extends stockComponent {
         this.stockCode = "GOOG";
         this.stockName = "Google";
         this.timePeriod = defaultTimeperiod();
-        this.stockData = data.getData(this.timePeriod, this.stockCode);
+        data = new CSVFileReader();
+        this.stockData = data.getData();
         initIndicators();
     }
 
@@ -25,14 +26,16 @@ public class Stock extends stockComponent {
         this.stockName = newStockName;
         this.stockCode = newStockCode;
         this.timePeriod = timePeriod;
-        this.stockData = data.getData(this.timePeriod, this.stockCode);
+        data = new onlineDataReaderAdapter(this.timePeriod, this.stockCode);
+        this.stockData = data.getData();
         initIndicators();
     }
 
     public Stock(String newStockName, String newStockCode) {
         this.stockName = newStockName;
         this.stockCode = newStockCode;
-        this.stockData = data.getData(defaultTimeperiod(), this.stockCode);
+        data = new onlineDataReaderAdapter(defaultTimeperiod(), this.stockCode);
+        this.stockData = data.getData();
         initIndicators();
     }
 
@@ -56,7 +59,7 @@ public class Stock extends stockComponent {
 
     public void updateTimePeriod(Date[] newTimePeriod) {
         this.timePeriod = newTimePeriod;
-        this.stockData = this.data.getData(this.timePeriod, this.stockName);
+        this.stockData = this.data.getData();
     }
 
     private Date[] defaultTimeperiod() {

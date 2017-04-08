@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 
-public class onlineDataReader implements Data {
+public class onlineDataReader{
 
     public LinkedList<tick> getData(Date[] timeperiod, String companyName) {
         LinkedList<tick> dataList = new LinkedList<tick>();

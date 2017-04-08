@@ -20,6 +20,7 @@ public class LineChart implements Chart {
 
     public LineChart(String companyName, Date[] time, String companyCode) {
         stock = new Stock(companyName, companyCode, time);
+    	//stock = new Stock();
         createChart();
     }
 

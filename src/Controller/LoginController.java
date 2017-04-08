@@ -10,9 +10,10 @@ public class LoginController {
     private LoginView loginView;
     private Login loginModel;
 
-    public LoginController(LoginView theView, Login theModel) {
-        this.loginView = theView;
-        this.loginModel = theModel;
+    public LoginController() {
+        this.loginView = new LoginView();
+        this.loginModel = new Login();
+        this.loginView.setVisible(true);
         this.loginView.jLoginActionPerformed(new LoginListener());
     }
 
