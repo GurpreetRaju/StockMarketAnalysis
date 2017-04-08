@@ -15,7 +15,6 @@ public class TechnicalAnalysis {
         chart = null;
         try {
             //stockListReader newStockList = new stockListReader(this.stockfile);
-            //System.out.print("Chechpoint 1" + newStockList.getStockCode(companyName));
             chart = new LineChart(companyName, timeperiod, newStockList.getStockCode(companyName));
         } catch (Exception e) {
             System.out.print("Exception" + e);

@@ -1,8 +1,7 @@
-code,company
+code,name
 GOOG,Alphabet Inc.
 AWR,American States Water Company
 AWK,American Water Works Company Inc.
-AAPL,Apple Inc.
 WTR,Aqua America Inc.
 ARTNA,Artesian Resources Corp.
 AVA,Avista Corp.
@@ -29,3 +28,4 @@ HTM,U.S. Geothermal Inc.
 VHI,Valhi Inc.
 VVC,Vectren Corporation
 WR,Westar Energy Inc.
+AAPL,Apple Inc.
