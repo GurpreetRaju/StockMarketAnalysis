@@ -69,3 +69,4 @@ Temporary Items
 *.class
 bin/Controller/TechnicalAnalysisController.class
 *.class
+*.useq

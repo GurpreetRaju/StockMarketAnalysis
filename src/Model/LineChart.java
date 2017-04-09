@@ -20,6 +20,7 @@ public class LineChart implements Chart {
 
     public LineChart(String companyName, Date[] time, String companyCode) {
         stock = new Stock(companyName, companyCode, time);
+    	//stock = new Stock();
         createChart();
     }
 
@@ -79,22 +80,4 @@ public class LineChart implements Chart {
         String str = stock.indicatorSignal(ma);
         return str;
     }
-
-//	public static void main(String[] arg){
-//		Date[] timePeriod = new Date[2];
-//		Calendar cal = Calendar.getInstance();
-//		timePeriod[1] = cal.getTime();
-//		cal.add(Calendar.YEAR, -1); // http://stackoverflow.com/questions/14946886/store-current-date-and-date-1-year-from-current-in-java
-//		timePeriod[0] = cal.getTime();
-//		LineChart chart = new LineChart("Google", timePeriod,"GOOG");
-//		JFrame frame = new JFrame();
-//		frame.setSize(600, 400);
-//		ChartPanel chartPanel = new ChartPanel(chart.getChart());
-//        chartPanel.setSize(frame.getSize());
-//        frame.add(chartPanel);
-//        frame.setVisible(true);
-//        chart.updateDataset(20);
-//        String str = chart.getIndicatorSignal(20);
-//        System.out.println(str);
-//	}
 }

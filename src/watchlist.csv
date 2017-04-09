@@ -1,4 +1,4 @@
-code,name
+code,company
 GOOG,Alphabet Inc.
 AWR,American States Water Company
 AWK,American Water Works Company Inc.
@@ -9,9 +9,13 @@ AVA,Avista Corp.
 BIP,Brookfield Infrastructure Partners L.P.
 CWT,California Water Service Group
 SBS,Companhia de Saneamento Basico do Estado de Sao Paulo
+CTWS,Connecticut Water Service Inc.
 CWCO,Consolidated Water Co. Ltd.
 CZZ,Cosan Limited
+EXC,Exelon Corporation
 MGEE,MGE Energy Inc.
+MSFT,Microsoft Corporation
+MSEX,Middlesex Water Co.
 NEP,NextEra Energy Partners LP
 NI,NiSource Inc.
 NWE,Northwestern Corporation
@@ -25,3 +29,4 @@ HTM,U.S. Geothermal Inc.
 VHI,Valhi Inc.
 VVC,Vectren Corporation
 WR,Westar Energy Inc.
+AAPL,Apple Inc.
