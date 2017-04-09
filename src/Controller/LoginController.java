@@ -10,10 +10,16 @@ public class LoginController {
     private LoginView loginView;
     private Login loginModel;
 
+    public LoginController() {
+        new LoginController(new LoginView(), new Login());
+    }
+
     public LoginController(LoginView theView, Login theModel) {
         this.loginView = theView;
         this.loginModel = theModel;
         this.loginView.jLoginActionPerformed(new LoginListener());
+        this.loginView.registrationActionPerformed(new RegistrationListener());
+        loginView.setVisible(true);
     }
 
     class LoginListener implements ActionListener {
@@ -23,8 +29,7 @@ public class LoginController {
                 if (authorize) {
                     loginView.setVisible(false);
                     loginView.dispose();
-                    @SuppressWarnings("unused")
-                    TechnicalAnalysisController ta = new TechnicalAnalysisController();
+                    new TechnicalAnalysisController();
                 } else {
                     loginView.displayErrorMessage("Invalid Username or Password!");
                 }
@@ -35,4 +40,11 @@ public class LoginController {
         }
     }
 
+    class RegistrationListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            loginView.setVisible(false);
+            loginView.dispose();
+            new RegistrationController();
+        }
+    }
 }

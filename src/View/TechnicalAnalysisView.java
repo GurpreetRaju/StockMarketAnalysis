@@ -25,6 +25,7 @@ public class TechnicalAnalysisView extends JFrame {
 
     private Dimension getScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private ArrayList<JCheckBox> checkBoxes = new ArrayList<JCheckBox>();
+
     // Set up the menus
     private JMenuBar menuBar;
     private JMenu menuFile;
@@ -62,7 +63,6 @@ public class TechnicalAnalysisView extends JFrame {
 
     private JPanel analysisPanel;
     private JLabel analysisLabel;
-    private JLabel resultLabel;
     private JCheckBox shortChBox;
     private JLabel shortChBoxImage;
     private JCheckBox midCBhox;
@@ -95,11 +95,6 @@ public class TechnicalAnalysisView extends JFrame {
     private JPanel controlsPanel;
     private JLabel messageLabel;
     private JButton closeBtn;
-
-
-//    private JButton nextBtn;
-//    private JButton BackBtn;
-//    private JButton addStockBtn;
 
     public TechnicalAnalysisView(String[] stockList) {
         initComponents(stockList);
@@ -137,12 +132,10 @@ public class TechnicalAnalysisView extends JFrame {
         menuExit = new JMenuItem("Exit");
         menuFile.add(menuExit);
         this.setJMenuBar(menuBar);
-        // build the menu
 
         // Stock Panel
         stockPanel = new JPanel();
         stockPanel.setLayout(new GridBagLayout());
-//        stockPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
         // Stock Panel : Stock, date and update botton.
         stockOptionsPanel = new JPanel();
@@ -161,7 +154,6 @@ public class TechnicalAnalysisView extends JFrame {
         calendar.add(Calendar.YEAR, -1);
         Date fromStockDate = calendar.getTime();
 
-        //Todo: change earliestDate to first date of stock history
         calendar.add(Calendar.YEAR, -10);
         Date earliestStockDate = calendar.getTime();
 
@@ -197,7 +189,6 @@ public class TechnicalAnalysisView extends JFrame {
 
 
         wChartPanel = new JPanel();
-//        wChartPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         wChartPanel.setAlignmentX(JPanel.CENTER_ALIGNMENT);
         wChartPanel.setAlignmentY(JPanel.CENTER_ALIGNMENT);
 
@@ -221,10 +212,6 @@ public class TechnicalAnalysisView extends JFrame {
         // Stock Panel : Analysis panel, Recommendation label, strategy checkboxes.
         analysisPanel = new JPanel();
         analysisPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-
-        //Todo Delete when pictures will  be shown
-        resultLabel = new JLabel("Results will be sown here");
-        resultLabel.setName("AnalsysResult");
 
         analysisLabel = new JLabel("Analysis:");
         analysisLabel.setName("analysisLabel");
@@ -253,7 +240,6 @@ public class TechnicalAnalysisView extends JFrame {
 
         // Watch list Panel.
         watchListPanel = new JPanel();
-//        watchListPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         watchListPanel.setLayout(new BoxLayout(watchListPanel, BoxLayout.PAGE_AXIS));
         watchListPanel.setAlignmentY(Component.TOP_ALIGNMENT);
 
@@ -272,31 +258,11 @@ public class TechnicalAnalysisView extends JFrame {
         watchlistOptionPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         delStock = new JButton("Remove selected");
 
-        //other
-//        closeBtn = new JButton();
-//        closeBtn.setText("Close");
-//        closeBtn.setName("Back");
-//        closeBtn.addActionListener(e -> System.exit(0));
-//        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-//        nextBtn = new JButton();
-//        nextBtn.setText("Next");
-
-//        addStockBtn = new JButton();
-//        addStockBtn.setText("Add Stock");
-
-//        BackBtn = new JButton();
-//        BackBtn.setText("Back");
-
-
-//Build view https://examples.javacodegeeks.com/desktop-java/swing/java-swing-layout-example/
-
         //Setting Panels
 
         GridBagLayout layout = new GridBagLayout();
         GridBagConstraints gbc = new GridBagConstraints();
 
-        //https://docs.oracle.com/javase/7/docs/api/java/awt/GridBagConstraints.html
         gbc.fill = GridBagConstraints.BOTH;
         this.getContentPane().setLayout(layout);
 
@@ -326,10 +292,7 @@ public class TechnicalAnalysisView extends JFrame {
         gbc.gridheight = 2;
         gbc.weightx = 0.0;
         gbc.weighty = 0.0;
-
         stockPanel.add(stockOptionsPanel, gbc);
-
-//        this.add(stockOptionsPanel, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 3;
@@ -337,7 +300,6 @@ public class TechnicalAnalysisView extends JFrame {
         gbc.gridheight = 4;
         gbc.weightx = 0.9;
         gbc.weighty = 0.9;
-//        this.add(wChartPanel, gbc);
         stockPanel.add(wChartPanel, gbc);
 
         legendPanel.add(legengLable);
@@ -394,8 +356,6 @@ public class TechnicalAnalysisView extends JFrame {
         analysisPanel.add(longChBoxImage);
         analysisPanel.add(longChBox);
 
-//        analysisPanel.add(messageLabel);
-
         gbc.gridx = 0;
         gbc.gridy = 7;
         gbc.gridwidth = 3;
@@ -414,7 +374,6 @@ public class TechnicalAnalysisView extends JFrame {
         this.add(watchlistOptionPanel, gbc);
 
 
-//        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setSize(1280, 800);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
