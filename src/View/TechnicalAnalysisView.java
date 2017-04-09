@@ -1,5 +1,9 @@
 package View;
 
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,10 +13,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import javax.swing.*;
-
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
 
 /**
  * @author Gurpreet
@@ -23,8 +23,9 @@ public class TechnicalAnalysisView extends JFrame {
 
     private static final long serialVersionUID = 494000442742952620L;
 
-   private Dimension getScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
-   private ArrayList<JCheckBox> checkBoxes = new ArrayList<JCheckBox>();
+    private Dimension getScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private ArrayList<JCheckBox> checkBoxes = new ArrayList<JCheckBox>();
+
     // Set up the menus
     private JMenuBar menuBar;
     private JMenu menuFile;
@@ -33,12 +34,14 @@ public class TechnicalAnalysisView extends JFrame {
     private JPanel stockPanel;
 
     private JPanel stockOptionsPanel;
+    private JPanel stockOptionsPanelInner1;
+    private JPanel stockOptionsPanelInner2;
+    private JPanel stockOptionsPanelInnerLeft;
+    private JPanel stockOptionsPanelInnerRight;
     private JComboBox<String> stocklist;
     private JLabel from;
-    //    private JTextField fromField;
     private JSpinner fromDate;
     private JLabel to;
-    //    private JTextField toField;
     private JSpinner toDate;
     private JButton updateBtn;
     private JButton addToWishBtn;
@@ -46,17 +49,33 @@ public class TechnicalAnalysisView extends JFrame {
     private JPanel wChartPanel;
     private ChartPanel chartPanel;
 
+    private JLabel legengLable;
+    private JLabel buyLable;
+    private JLabel buyLableImage;
+    private JLabel sellLable;
+    private JLabel sellLableImage;
+    private JLabel keepLable;
+    private JLabel keepLableImage;
+    private JLabel undefinedLable;
+    private JLabel undefinedLableImage;
+
+    private JPanel legendPanel;
+
     private JPanel analysisPanel;
     private JLabel analysisLabel;
-    private JLabel resultLabel;
     private JCheckBox shortChBox;
+    private JLabel shortChBoxImage;
     private JCheckBox midCBhox;
+    private JLabel midCBhoxImage;
     private JCheckBox longChBox;
+    private JLabel longChBoxImage;
 
+    private JPanel watchPanel;
     private JPanel watchListPanel;
-    private JLabel watchListPlaceholder;
+    private JLabel watchListLabel;
+    private JScrollPane scrollPane;
     private JPanel tempJPanel;
-    
+
     private JPanel watchlistOptionPanel;
     private JButton delStock;
 
@@ -68,24 +87,41 @@ public class TechnicalAnalysisView extends JFrame {
     private String upImagePath = "resources/Stock-Index-Up-icon_16.png";
     private ImageIcon downImage;
     private String downImagePath = "resources/Stock-Index-Down-icon_16.png";
-//    private LinkedList<JPanel> watchListEntities;
+    private ImageIcon keepImage;
+    private String keepImagePath = "resources/Stock-Index-Keep-icon_16.png";
+    private ImageIcon unknownImage;
+    private String unknownImagePath = "resources/Stock-Index-Unknown-icon_16.png";
 
     private JPanel controlsPanel;
     private JLabel messageLabel;
     private JButton closeBtn;
 
-
-    private JButton nextBtn;
-    private JButton BackBtn;
-    private JButton addStockBtn;
-
     public TechnicalAnalysisView(String[] stockList) {
         initComponents(stockList);
+    }
+
+    public static void main(String[] arg) {
+        String[] stockList = {"Google", "Apple", "Intel"};
+        String[][] watchlist = {{"Google", "buy"}, {"Apple", "sell"}, {"Intel", "buy"}};
+        TechnicalAnalysisView tv = new TechnicalAnalysisView(stockList);
+        tv.setWatchlist(watchlist);
+        tv.setVisible(true);
+        ActionListener delStockBtnListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String[] boxes = tv.getSelectedCheckboxes();
+                for (String s : boxes) {
+                    System.out.println(s);
+                }
+            }
+        };
+        tv.delStockBtnListner(delStockBtnListener);
     }
 
     private void initComponents(String[] listString) {
 
         // Declare Views
+        loadImages();
 
         // Set up the menus
         menuBar = new JMenuBar();
@@ -96,15 +132,18 @@ public class TechnicalAnalysisView extends JFrame {
         menuExit = new JMenuItem("Exit");
         menuFile.add(menuExit);
         this.setJMenuBar(menuBar);
-        // build the menu
 
         // Stock Panel
         stockPanel = new JPanel();
-        stockPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        stockPanel.setLayout(new GridBagLayout());
 
         // Stock Panel : Stock, date and update botton.
         stockOptionsPanel = new JPanel();
         stockOptionsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        stockOptionsPanelInner1 = new JPanel();
+        stockOptionsPanelInner2 = new JPanel();
+        stockOptionsPanelInnerLeft = new JPanel();
+        stockOptionsPanelInnerRight = new JPanel();
 
         stocklist = new JComboBox<String>(listString);
         from = new JLabel("From:");
@@ -115,8 +154,6 @@ public class TechnicalAnalysisView extends JFrame {
         calendar.add(Calendar.YEAR, -1);
         Date fromStockDate = calendar.getTime();
 
-        //Todo change to dates http://docs.oracle.com/javase/tutorial/uiswing/components/spinner.html
-        //Todo: change earliestDate to first date of stock history
         calendar.add(Calendar.YEAR, -10);
         Date earliestStockDate = calendar.getTime();
 
@@ -144,44 +181,72 @@ public class TechnicalAnalysisView extends JFrame {
         updateBtn = new JButton();
         updateBtn.setText("Update");
         updateBtn.setName("Update");
-        
+
         addToWishBtn = new JButton("Add to Wishlist");
         addToWishBtn.setName("Add to Wishlist");
 
         // Stock Panel : Stock chart.
+
+
         wChartPanel = new JPanel();
-        wChartPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        wChartPanel.setAlignmentX(JPanel.CENTER_ALIGNMENT);
+        wChartPanel.setAlignmentY(JPanel.CENTER_ALIGNMENT);
 
         wChartPanel.setName("wChartPanel");
         wChartPanel.validate();
-        wChartPanel.setSize(getScreenSize);;
+        wChartPanel.setSize(getScreenSize);
+
+
+        legengLable = new JLabel("Legend:");
+        buyLable = new JLabel("Buy");
+        buyLableImage = new JLabel(upImage);
+        sellLable = new JLabel("Sell");
+        sellLableImage = new JLabel(downImage);
+        keepLable = new JLabel("Keep");
+        keepLableImage = new JLabel(keepImage);
+        undefinedLable = new JLabel("No signal");
+        undefinedLableImage = new JLabel(unknownImage);
+
+        legendPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
         // Stock Panel : Analysis panel, Recommendation label, strategy checkboxes.
         analysisPanel = new JPanel();
         analysisPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
-        resultLabel = new JLabel("Results will be sown here");
-        resultLabel.setName("AnalsysResult");
-
-        analysisLabel = new JLabel("Analisis Lable placeholder");
-        analysisLabel.setText("Analysis");
+        analysisLabel = new JLabel("Analysis:");
         analysisLabel.setName("analysisLabel");
 
 
         shortChBox = new JCheckBox("Short-term");
         shortChBox.setName("shortChBox");
+        shortChBoxImage = new JLabel(unknownImage);
 
         midCBhox = new JCheckBox("Medium-term");
         midCBhox.setName("midCBhox");
+        midCBhoxImage = new JLabel(unknownImage);
 
         longChBox = new JCheckBox("Long-term");
         longChBox.setName("longChBox");
+        longChBoxImage = new JLabel(unknownImage);
+
+
+        // Watch Panel.
+
+        watchPanel = new JPanel();
+        watchPanel.setLayout(new BoxLayout(watchPanel, BoxLayout.PAGE_AXIS));
+        watchPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+
+        watchListLabel = new JLabel("Long Strategy watch list:");
 
         // Watch list Panel.
         watchListPanel = new JPanel();
-        watchListPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        watchListPanel.setLayout(new BoxLayout(watchListPanel, BoxLayout.PAGE_AXIS));
+        watchListPanel.setAlignmentY(Component.TOP_ALIGNMENT);
 
-        watchListPlaceholder = new JLabel("Watch List ");
+        scrollPane = new JScrollPane(watchListPanel);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
 
         // Control Panel.
         controlsPanel = new JPanel();
@@ -189,98 +254,126 @@ public class TechnicalAnalysisView extends JFrame {
 
         messageLabel = new JLabel();
 
-        closeBtn = new JButton();
-        closeBtn.setText("Close");
-        closeBtn.setName("Back");
-        closeBtn.addActionListener(e -> System.exit(0));
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        //other
-        nextBtn = new JButton();
-        nextBtn.setText("Next");
-
-        addStockBtn = new JButton();
-        addStockBtn.setText("Add Stock");
-
-        BackBtn = new JButton();
-        BackBtn.setText("Back");
-        
         watchlistOptionPanel = new JPanel();
         watchlistOptionPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         delStock = new JButton("Remove selected");
-
-//Build view https://examples.javacodegeeks.com/desktop-java/swing/java-swing-layout-example/
-
 
         //Setting Panels
 
         GridBagLayout layout = new GridBagLayout();
         GridBagConstraints gbc = new GridBagConstraints();
 
-        //https://docs.oracle.com/javase/7/docs/api/java/awt/GridBagConstraints.html
         gbc.fill = GridBagConstraints.BOTH;
         this.getContentPane().setLayout(layout);
 
-        stockOptionsPanel.add(stocklist);
-        stockOptionsPanel.add(from);
-        stockOptionsPanel.add(fromDate);
-        stockOptionsPanel.add(to);
-        stockOptionsPanel.add(toDate);
-        stockOptionsPanel.add(updateBtn);
-        stockOptionsPanel.add(addToWishBtn);
         stockOptionsPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        stockOptionsPanelInnerLeft.setLayout(new BoxLayout(stockOptionsPanelInnerLeft, BoxLayout.PAGE_AXIS));
+
+        stockOptionsPanelInner1.setLayout(new FlowLayout(FlowLayout.CENTER));
+        stockOptionsPanelInner1.add(stocklist);
+        stockOptionsPanelInner1.add(updateBtn);
+        stockOptionsPanelInnerLeft.add(stockOptionsPanelInner1);
+
+        stockOptionsPanelInner2.setLayout(new FlowLayout(FlowLayout.CENTER));
+        stockOptionsPanelInner2.add(from);
+        stockOptionsPanelInner2.add(fromDate);
+        stockOptionsPanelInner2.add(to);
+        stockOptionsPanelInner2.add(toDate);
+        stockOptionsPanelInnerLeft.add(stockOptionsPanelInner2);
+
+        stockOptionsPanelInnerRight.add(addToWishBtn);
+
+        stockOptionsPanel.add(stockOptionsPanelInnerLeft);
+        stockOptionsPanel.add(stockOptionsPanelInnerRight);
+
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.gridwidth = 2;
+        gbc.gridwidth = 3;
+        gbc.gridheight = 2;
+        gbc.weightx = 0.0;
+        gbc.weighty = 0.0;
+        stockPanel.add(stockOptionsPanel, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.gridwidth = 3;
+        gbc.gridheight = 4;
+        gbc.weightx = 0.9;
+        gbc.weighty = 0.9;
+        stockPanel.add(wChartPanel, gbc);
+
+        legendPanel.add(legengLable);
+        legendPanel.add(new JLabel("   "));
+        legendPanel.add(buyLableImage);
+        legendPanel.add(buyLable);
+        legendPanel.add(new JLabel("   "));
+        legendPanel.add(keepLableImage);
+        legendPanel.add(keepLable);
+        legendPanel.add(new JLabel("   "));
+        legendPanel.add(sellLableImage);
+        legendPanel.add(sellLable);
+        legendPanel.add(new JLabel("   "));
+        legendPanel.add(undefinedLableImage);
+        legendPanel.add(undefinedLable);
+
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        gbc.gridwidth = 3;
         gbc.gridheight = 1;
         gbc.weightx = 0.0;
         gbc.weighty = 0.0;
-        this.add(stockOptionsPanel, gbc);
+        stockPanel.add(legendPanel, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.gridwidth = 2;
-        gbc.gridheight = 6;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        this.add(wChartPanel, gbc);
-
-
-        watchListPanel.add(watchListPlaceholder);
-        loadArrowsImages();
-        watchListPanel.setLayout(new BoxLayout(watchListPanel, BoxLayout.Y_AXIS));
-        gbc.gridx = 2;
         gbc.gridy = 0;
-        gbc.gridwidth = 1;
+        gbc.gridwidth = 3;
+        gbc.gridheight = 8;
+        gbc.weightx = 0.9;
+        gbc.weighty = 0.9;
+        this.add(stockPanel, gbc);
+
+        watchPanel.add(watchListLabel);
+        watchPanel.add(scrollPane);
+
+        gbc.gridx = 3;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
         gbc.gridheight = 7;
-        gbc.weightx = 0.3;
-        gbc.weighty = 0.0;
-        this.add(watchListPanel, gbc);
+        gbc.weightx = 0.6;
+        gbc.weighty = 0.6;
+
+        this.add(watchPanel, gbc);
+
 
         analysisPanel.add(analysisLabel);
+
+        analysisPanel.add(shortChBoxImage);
         analysisPanel.add(shortChBox);
+
+        analysisPanel.add(midCBhoxImage);
         analysisPanel.add(midCBhox);
+
+        analysisPanel.add(longChBoxImage);
         analysisPanel.add(longChBox);
-        analysisPanel.add(messageLabel);
+
         gbc.gridx = 0;
+        gbc.gridy = 7;
+        gbc.gridwidth = 3;
+        gbc.gridheight = 2;
+        gbc.weightx = 0.0;
+        gbc.weighty = 0.0;
+        this.add(analysisPanel, gbc);
+
+        watchlistOptionPanel.add(delStock);
+        gbc.gridx = 3;
         gbc.gridy = 7;
         gbc.gridwidth = 2;
         gbc.gridheight = 2;
-        gbc.weightx = 1.0;
-        gbc.weighty = 0.0;
-        this.add(analysisPanel, gbc);
-        
-        watchlistOptionPanel.add(delStock);
-        gbc.gridx = 2;
-        gbc.gridy = 7;
-        gbc.gridwidth = 1;
-        gbc.gridheight = 2;
-        gbc.weightx = 0.3;
+        gbc.weightx = 0.0;
         gbc.weighty = 0.0;
         this.add(watchlistOptionPanel, gbc);
-        
 
-//        setExtendedState(JFrame.MAXIMIZED_BOTH);
+
         setSize(1280, 800);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -289,18 +382,21 @@ public class TechnicalAnalysisView extends JFrame {
 
     //Listeners
     public void addUdateBtnListner(ActionListener actionListener) {
-    	updateBtn.addActionListener(actionListener);
+        updateBtn.addActionListener(actionListener);
     }
-    public void addToWishBtnListener(ActionListener actionListener){
-    	addToWishBtn.addActionListener(actionListener);
+
+    public void addToWishBtnListener(ActionListener actionListener) {
+        addToWishBtn.addActionListener(actionListener);
     }
 
     public void addShortCheckboxListner(ActionListener actionListener) {
         shortChBox.addActionListener(actionListener);
     }
+
     public void addMidCheckboxListner(ActionListener actionListener) {
         midCBhox.addActionListener(actionListener);
     }
+
     public void addLongCheckboxListner(ActionListener actionListener) {
         longChBox.addActionListener(actionListener);
     }
@@ -308,20 +404,51 @@ public class TechnicalAnalysisView extends JFrame {
     public void addMenuExitListner(ActionListener actionListener) {
         menuExit.addActionListener(actionListener);
     }
-    
+
     public void delStockBtnListner(ActionListener actionListener) {
-       delStock.addActionListener(actionListener);
+        delStock.addActionListener(actionListener);
     }
 
     //Setters and Getters
-    public void resetChkboxes(){
-    	shortChBox.setSelected(false);
-    	midCBhox.setSelected(false);
+    public void resetChkboxes() {
+        shortChBox.setSelected(false);
+        midCBhox.setSelected(false);
         longChBox.setSelected(false);
+        shortChBoxImage.setIcon(unknownImage);
+        midCBhoxImage.setIcon(unknownImage);
+        longChBoxImage.setIcon(unknownImage);
+
     }
-    
+
     public void setLabelText(String text) {
         messageLabel.setText(text);
+    }
+
+    public ImageIcon convertSignal(String signal) {
+        switch (signal) {
+            case "buy":
+                return upImage;
+            case "sell":
+                return downImage;
+            case "keep":
+                return keepImage;
+            case "none":
+                return unknownImage;
+            default:
+                return unknownImage;
+        }
+    }
+
+    public void setShortChBoxImage(String signal) {
+        shortChBoxImage.setIcon(convertSignal(signal));
+    }
+
+    public void setMidChBoxImage(String signal) {
+        midCBhoxImage.setIcon(convertSignal(signal));
+    }
+
+    public void setLongChBoxImage(String signal) {
+        longChBoxImage.setIcon(convertSignal(signal));
     }
 
     public Date[] getDates() {
@@ -331,90 +458,80 @@ public class TechnicalAnalysisView extends JFrame {
     public String getStockSelected() {
         return (String) stocklist.getSelectedItem();
     }
-    
-    public String[] getSelectedCheckboxes(){
-    	ArrayList<String> remstocks= new ArrayList<String>();
-    	for(JCheckBox c: checkBoxes){
-    		if(c.isSelected()){
-    			remstocks.add(c.getText());
-    		}
-    	}
-    	
-    	return remstocks.toArray(new String[remstocks.size()]);
+
+    public String[] getSelectedCheckboxes() {
+        ArrayList<String> remstocks = new ArrayList<String>();
+        for (JCheckBox c : checkBoxes) {
+            if (c.isSelected()) {
+                remstocks.add(c.getText());
+            }
+        }
+
+        return remstocks.toArray(new String[remstocks.size()]);
     }
 
-    private void loadArrowsImages() {
+    private void loadImages() {
         upImage = new ImageIcon(upImagePath);
         downImage = new ImageIcon(downImagePath);
+        keepImage = new ImageIcon(keepImagePath);
+        unknownImage = new ImageIcon(unknownImagePath);
     }
-    
 
     public void setChart(JFreeChart chart) {
-    	chartPanel = new ChartPanel(chart);
+        chartPanel = new ChartPanel(chart);
         chartPanel.setSize(getScreenSize);
         chartPanel.addComponentListener(new ComponentAdapter() {
-        	@Override
-        	public void componentResized(ComponentEvent e) {
-        	//chartPanel.updateUI();
-        	}
-		});
-        
-        if(wChartPanel.getComponentCount() != 0){
-    		wChartPanel.removeAll();
-    	}
-        
+            @Override
+            public void componentResized(ComponentEvent e) {
+                //chartPanel.updateUI();
+            }
+        });
+
+        if (wChartPanel.getComponentCount() != 0) {
+            wChartPanel.removeAll();
+        }
+
         chartPanel.updateUI();
         wChartPanel.add(chartPanel);
-        
-        
+
+
         wChartPanel.revalidate();
         wChartPanel.repaint();
         wChartPanel.updateUI();
     }
-    
-    public void setWatchlist(String[][] watchListEntities){
-    	if(watchListPanel.getComponentCount()!=0){
-    		watchListPanel.removeAll();
-    		this.checkBoxes.clear();
-    	}
-    	for (String[] str : watchListEntities) {
+
+    public void setWatchlist(String[][] watchListEntities) {
+        if (watchListPanel.getComponentCount() != 0) {
+            watchListPanel.removeAll();
+            this.checkBoxes.clear();
+        }
+        GridBagConstraints gbc = new GridBagConstraints();
+        for (String[] str : watchListEntities) {
             tempJPanel = new JPanel();
             tempJPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
             if (str[1].equals("buy")) {
                 tempJPanel.add(new JLabel(upImage));
-                //System.out.println("add buy signal");
-            } else if(str[1].equals("sell")){
+            } else if (str[1].equals("sell")) {
                 tempJPanel.add(new JLabel(downImage));
-            }
-            else{
-            	tempJPanel.add(new JLabel("     "));
+            } else {    //no buy or sell
+                tempJPanel.add(new JLabel(keepImage));
             }
             JCheckBox cb = new JCheckBox(str[0]);
-            cb.setHorizontalTextPosition(SwingConstants.LEFT);
+            cb.setHorizontalTextPosition(SwingConstants.RIGHT);
             tempJPanel.add(cb);
             this.checkBoxes.add(cb);
+
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            gbc.gridwidth = 1;
+            gbc.gridheight = 1;
+            gbc.weightx = 0.0;
+            gbc.weighty = 0.0;
+
             watchListPanel.add(tempJPanel);
         }
-    	watchListPanel.revalidate();
-    	watchListPanel.repaint();
-    	watchListPanel.updateUI();
-    }
-    
-    public static void main(String[] arg){
-    	String[] stockList = {"Google","Apple","Intel"};
-    	String[][] watchlist = {{"Google","buy"},{"Apple","sell"},{"Intel","buy"}};
-    	TechnicalAnalysisView tv = new TechnicalAnalysisView(stockList);
-    	tv.setWatchlist(watchlist);
-    	tv.setVisible(true);
-    	ActionListener delStockBtnListener = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String[] boxes = tv.getSelectedCheckboxes();
-				for(String s:boxes){
-					System.out.println(s);
-				}
-			}
-		};
-		tv.delStockBtnListner(delStockBtnListener);
+        watchListPanel.revalidate();
+        watchListPanel.repaint();
+        watchListPanel.updateUI();
     }
 }

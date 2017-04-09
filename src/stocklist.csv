@@ -1,31 +1,31 @@
 code,company
-AAPL,Apple Inc.
-MSFT,Microsoft Corporation
 GOOG,Alphabet Inc.
-VHI,"Valhi, Inc."
-SBS,Companhia de Saneamento Basico do Estado de Sao Paulo
-AWK,"American Water Works Company, Inc."
-CWT,California Water Service Group
-MSEX,Middlesex Water Co.
-ARTNA,Artesian Resources Corp.
-WTR,Aqua America Inc.
-CTWS,Connecticut Water Service Inc.
-SJW,SJW Corp.
-CWCO,Consolidated Water Co. Ltd.
-YORW,The York Water Company
 AWR,American States Water Company
-SRE,Sempra Energy
-BIP,Brookfield Infrastructure Partners L.P.
-TAC,TransAlta Corp.
-NWE,Northwestern Corporation
-VVC,Vectren Corporation
-HTM,U.S. Geothermal Inc.
+AWK,American Water Works Company Inc.
+AAPL,Apple Inc.
+WTR,Aqua America Inc.
+ARTNA,Artesian Resources Corp.
 AVA,Avista Corp.
-PEGI,Pattern Energy Group Inc.
+BIP,Brookfield Infrastructure Partners L.P.
+CWT,California Water Service Group
+SBS,Companhia de Saneamento Basico do Estado de Sao Paulo
+CTWS,Connecticut Water Service Inc.
+CWCO,Consolidated Water Co. Ltd.
 CZZ,Cosan Limited
-MGEE,MGE Energy Inc.
-NI,NiSource Inc.
-WR,"Westar Energy, Inc."
-RXNRP,REX ENERGY CORP
-NEP,"NextEra Energy Partners, LP"
 EXC,Exelon Corporation
+MGEE,MGE Energy Inc.
+MSFT,Microsoft Corporation
+MSEX,Middlesex Water Co.
+NEP,NextEra Energy Partners LP
+NI,NiSource Inc.
+NWE,Northwestern Corporation
+PEGI,Pattern Energy Group Inc.
+RXNRP,REX ENERGY CORP
+SJW,SJW Corp.
+SRE,Sempra Energy
+YORW,The York Water Company
+TAC,TransAlta Corp.
+HTM,U.S. Geothermal Inc.
+VHI,Valhi Inc.
+VVC,Vectren Corporation
+WR,Westar Energy Inc.
