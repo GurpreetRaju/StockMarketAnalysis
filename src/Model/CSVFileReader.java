@@ -11,6 +11,11 @@ import java.util.LinkedList;
 
 public class CSVFileReader implements Data {
 	private String file = "src/Sample data.csv";
+	
+	public CSVFileReader(){
+		this.file = PropertiesSingleton.getProperty("file");
+	}
+	
     public LinkedList<tick> getData() {
         LinkedList<tick> dataList = new LinkedList<tick>();
         try{        

@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.TechnicalAnalysis;
+import View.ConfigSourceDialog;
 import View.TechnicalAnalysisView;
 import org.jfree.chart.JFreeChart;
 
@@ -22,6 +23,7 @@ public class TechnicalAnalysisController {
     private ActionListener midCheckboxListener;
     private ActionListener longCheckboxListener;
     private ActionListener menuExitListner;
+    private ActionListener menuConfigListener;
 
     public TechnicalAnalysisController() {
         this.tamodel = new TechnicalAnalysis();
@@ -96,6 +98,14 @@ public class TechnicalAnalysisController {
             }
         };
         taview.addMenuExitListner(menuExitListner);
+        
+        menuConfigListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ConfigSourceDialog configDialog = new ConfigSourceDialog(new ConfigController());
+            }
+        };
+        taview.addMenuConfigListner(menuConfigListener);
     }
 
     public void checkState(int i, ActionEvent e) {
@@ -137,6 +147,9 @@ public class TechnicalAnalysisController {
         String stock = this.taview.getStockSelected();
         System.out.print("Chechpoint stock" + stock);
         JFreeChart jfree = this.tamodel.performAnalysis(stock, defaultPeriod);
+        if(jfree==null){
+        	ConfigSourceDialog c = new ConfigSourceDialog(new ConfigController());
+        }
         this.taview.setChart(jfree);
     }
 

@@ -90,7 +90,8 @@ public class LoginView extends JFrame {
         this.pack();
     }
 
-    public String getPassword() {
+    @SuppressWarnings("deprecation")
+	public String getPassword() {
         return jPassword.getText();
     }
 

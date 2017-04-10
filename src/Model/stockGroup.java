@@ -1,5 +1,8 @@
 package Model;
-
+/*
+	Created by: Gurpreet Raju
+	Composite Pattern
+*/
 import java.util.LinkedList;
 
 public class stockGroup extends stockComponent {
