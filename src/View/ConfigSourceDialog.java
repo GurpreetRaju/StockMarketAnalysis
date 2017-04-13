@@ -1,17 +1,17 @@
 package View;
 
 import java.awt.Container;
-import java.awt.FlowLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.SpringLayout;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import Controller.ConfigController;
 
@@ -28,11 +28,25 @@ public class ConfigSourceDialog extends JFrame {
 	public ConfigSourceDialog(ConfigController c) {
 		
 		    fileChkBx = new JCheckBox("File");
-		    fileAddress = new JTextField();
+		    fileAddress = new JTextField(c.getValues(),15);
+		    //fileAddress.setPreferredSize(new Dimension(200, 24));
+		    ok = new JButton("OK");	
+		    setSize(200,200);
 		    
 		    browse = new JButton("Browse");
 		    Container cp = getContentPane();
-		    cp.setLayout(new FlowLayout());
+		    SpringLayout layout = new SpringLayout();
+		    cp.setLayout(layout);
+		    layout.putConstraint(SpringLayout.WEST, fileChkBx, 5, SpringLayout.WEST, this);
+		    layout.putConstraint(SpringLayout.NORTH, fileChkBx, 5, SpringLayout.NORTH, this);
+		    layout.putConstraint(SpringLayout.WEST, fileAddress, 5, SpringLayout.WEST, this);
+		    //layout.putConstraint(SpringLayout.EAST, fileAddress, -5, SpringLayout.EAST, this);
+		    layout.putConstraint(SpringLayout.NORTH, fileAddress, 5, SpringLayout.SOUTH, fileChkBx);
+		    layout.putConstraint(SpringLayout.WEST, browse, 5, SpringLayout.WEST, this);
+		    layout.putConstraint(SpringLayout.NORTH, browse, 5, SpringLayout.SOUTH, fileAddress);
+		    layout.putConstraint(SpringLayout.WEST, ok, 5, SpringLayout.WEST, this);
+		    layout.putConstraint(SpringLayout.NORTH, ok, 5, SpringLayout.SOUTH, browse);
+		    
 		    cp.add(fileChkBx);
 		    cp.add(fileAddress);
 		    cp.add(browse);
@@ -40,13 +54,14 @@ public class ConfigSourceDialog extends JFrame {
 		    addBrowseAction(new ActionListener() {
 		    	public void actionPerformed(ActionEvent e) {
 		    		JFileChooser chooser = new JFileChooser();
+		    		FileNameExtensionFilter type = new FileNameExtensionFilter("CSV file", "csv");
+		    		chooser.setFileFilter(type);
 		    		int returnVal = chooser.showOpenDialog(null);
 		    		if(returnVal == JFileChooser.APPROVE_OPTION) {
 		    			setText(chooser.getSelectedFile().getAbsolutePath());
 		    		}
 		    	}
-			});
-		    ok = new JButton("OK");		    
+			});    
 		    
 		    ok.addActionListener(new ActionListener() {
 				@Override
@@ -56,7 +71,7 @@ public class ConfigSourceDialog extends JFrame {
 			    }
 		    });
 		    cp.add(ok);
-		    setSize(150, 125);
+		    this.revalidate();
 		    this.setVisible(true);
 	}
 	

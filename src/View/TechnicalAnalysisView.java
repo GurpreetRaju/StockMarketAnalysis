@@ -33,6 +33,7 @@ public class TechnicalAnalysisView extends JFrame {
     private JMenu menuFile;
     private JMenuItem menuExit;
     private JMenuItem configMenu;
+    private JMenuItem refreshMenu;
 
     private JPanel stockPanel;
 
@@ -136,6 +137,8 @@ public class TechnicalAnalysisView extends JFrame {
         menuFile.add(menuExit);
         configMenu = new JMenuItem("Preferences");
         menuFile.add(configMenu);
+        refreshMenu = new JMenuItem("Refresh");
+        menuFile.add(refreshMenu);
         
         this.setJMenuBar(menuBar);
 
@@ -413,6 +416,9 @@ public class TechnicalAnalysisView extends JFrame {
     
     public void addMenuConfigListner(ActionListener actionListener) {
         configMenu.addActionListener(actionListener);
+    }
+    public void addMenuRefListner(ActionListener actionListener) {
+        refreshMenu.addActionListener(actionListener);
     }
 
     public void delStockBtnListner(ActionListener actionListener) {

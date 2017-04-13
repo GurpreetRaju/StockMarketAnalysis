@@ -14,8 +14,8 @@ public class Stock extends stockComponent {
     private Date[] timePeriod;
 
     public Stock() {
-        this.stockCode = "GOOG";
-        this.stockName = "Google";
+        this.stockCode = "";
+        this.stockName = "File";
         this.timePeriod = defaultTimeperiod();
         data = new CSVFileReader();
         this.stockData = data.getData();

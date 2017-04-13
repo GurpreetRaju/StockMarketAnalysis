@@ -105,7 +105,7 @@ public class PropertiesSingleton {
         try {
         	output = new FileOutputStream(propFileName);
             prop.setProperty(key, value);
-            System.out.println("to prop" + key + " value " + value);
+            System.out.println("to prop " + key + " value " + value);
             prop.store(output, null);
         } catch (Exception ex) {
         	ex.printStackTrace();
