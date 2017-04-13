@@ -10,6 +10,11 @@ public class TechnicalAnalysis {
     private watchList wlist = new watchList();
     private String stockfile = "src/stocklist.csv";
     stockListReader newStockList = new stockListReader(this.stockfile);
+    
+    public JFreeChart performAnalysis(){
+      	chart = new LineChart();
+    	return chart.getChart();
+    }
 
     public JFreeChart performAnalysis(String companyName, Date[] timeperiod) {
         chart = null;
@@ -22,6 +27,7 @@ public class TechnicalAnalysis {
         JFreeChart jfree = chart.getChart();
         return jfree;
     }
+    
 
     public String addMA(int i) {
         if (!chart.isSeriesExist(i)) {

@@ -3,6 +3,8 @@ package View;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 
+import javafx.application.ConditionalFeature;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -30,6 +32,8 @@ public class TechnicalAnalysisView extends JFrame {
     private JMenuBar menuBar;
     private JMenu menuFile;
     private JMenuItem menuExit;
+    private JMenuItem configMenu;
+    private JMenuItem refreshMenu;
 
     private JPanel stockPanel;
 
@@ -131,6 +135,11 @@ public class TechnicalAnalysisView extends JFrame {
         menuBar.add(menuFile);
         menuExit = new JMenuItem("Exit");
         menuFile.add(menuExit);
+        configMenu = new JMenuItem("Preferences");
+        menuFile.add(configMenu);
+        refreshMenu = new JMenuItem("Refresh");
+        menuFile.add(refreshMenu);
+        
         this.setJMenuBar(menuBar);
 
         // Stock Panel
@@ -403,6 +412,13 @@ public class TechnicalAnalysisView extends JFrame {
 
     public void addMenuExitListner(ActionListener actionListener) {
         menuExit.addActionListener(actionListener);
+    }
+    
+    public void addMenuConfigListner(ActionListener actionListener) {
+        configMenu.addActionListener(actionListener);
+    }
+    public void addMenuRefListner(ActionListener actionListener) {
+        refreshMenu.addActionListener(actionListener);
     }
 
     public void delStockBtnListner(ActionListener actionListener) {

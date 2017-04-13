@@ -48,6 +48,24 @@ public class PropertiesSingleton {
             else return false;
         } else return false;
     }
+    
+    @SuppressWarnings("unused")
+	public static String getProperty(String uid){
+    	String result = "";
+    	try {
+			InputStream inputStream = new FileInputStream(propFileName);
+			if (inputStream != null) {
+				prop.load(inputStream);
+				result = prop.getProperty(uid.trim());
+			} else {
+				throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}    	   	
+    	return result;    	
+    }
 
     public static boolean saveProperty(String uid, String pwd) {
         OutputStream output = null;
@@ -78,6 +96,29 @@ public class PropertiesSingleton {
             }
         } else {
             isNoError = false;
+        }
+        return isNoError;
+    }
+    public static boolean saveConfigProperty(String key, String value) {
+    	OutputStream output = null;
+        boolean isNoError = true;
+        try {
+        	output = new FileOutputStream(propFileName);
+            prop.setProperty(key, value);
+            System.out.println("to prop " + key + " value " + value);
+            prop.store(output, null);
+        } catch (Exception ex) {
+        	ex.printStackTrace();
+            isNoError = false;
+        } finally {
+        	if (output != null) {
+        		try {
+        			output.close();
+        		} catch (IOException e) {
+        			e.printStackTrace();
+        			isNoError = false;
+        		}
+        	}
         }
         return isNoError;
     }

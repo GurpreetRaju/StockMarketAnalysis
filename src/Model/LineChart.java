@@ -19,8 +19,12 @@ public class LineChart implements Chart {
     private TimeSeriesCollection dataset;
 
     public LineChart(String companyName, Date[] time, String companyCode) {
-        stock = new Stock(companyName, companyCode, time);
-    	//stock = new Stock();
+    	stock = new Stock(companyName, companyCode, time);
+    	createChart();
+    }
+    
+    public LineChart() {
+    	stock = new Stock();
         createChart();
     }
 

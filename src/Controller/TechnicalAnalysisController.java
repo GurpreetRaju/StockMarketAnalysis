@@ -1,6 +1,8 @@
 package Controller;
 
+import Model.ConfigModel;
 import Model.TechnicalAnalysis;
+import View.ConfigSourceDialog;
 import View.TechnicalAnalysisView;
 import org.jfree.chart.JFreeChart;
 
@@ -22,6 +24,8 @@ public class TechnicalAnalysisController {
     private ActionListener midCheckboxListener;
     private ActionListener longCheckboxListener;
     private ActionListener menuExitListner;
+    private ActionListener menuConfigListener;
+    private ActionListener menuRefListener;
 
     public TechnicalAnalysisController() {
         this.tamodel = new TechnicalAnalysis();
@@ -96,6 +100,23 @@ public class TechnicalAnalysisController {
             }
         };
         taview.addMenuExitListner(menuExitListner);
+        
+        menuConfigListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ConfigSourceDialog configDialog = new ConfigSourceDialog(new ConfigController());
+            	//ConfigController c = new ConfigController();
+            	//setChart();
+            }
+        };
+        taview.addMenuConfigListner(menuConfigListener);
+        menuRefListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setChart();
+            }
+        };
+        taview.addMenuRefListner(menuRefListener);
     }
 
     public void checkState(int i, ActionEvent e) {
@@ -134,9 +155,14 @@ public class TechnicalAnalysisController {
     ;
 
     private void setChart() {
-        String stock = this.taview.getStockSelected();
-        System.out.print("Chechpoint stock" + stock);
-        JFreeChart jfree = this.tamodel.performAnalysis(stock, defaultPeriod);
+    	JFreeChart jfree;
+    	if(new ConfigModel().isSourceFile()){
+    		jfree = this.tamodel.performAnalysis();
+    	}
+    	else{
+    		String stock = this.taview.getStockSelected();
+    		jfree = this.tamodel.performAnalysis(stock, defaultPeriod);
+    	}
         this.taview.setChart(jfree);
     }
 
