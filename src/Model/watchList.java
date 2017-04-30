@@ -12,12 +12,14 @@ public class watchList {
 
     private void initList() {
         for (String[] stock : reader.getList()) {
+        	System.out.println(stock[1]+ " " + stock[0]);
             stocksGroup.add(new Stock(stock[1], stock[0]));
         }
     }
 
     public String[][] getWatchlistEntities() {
         ArrayList<String[]> watchListEntities = new ArrayList<String[]>();
+        System.out.println("Reading watchlist entities");
         int size = ((stockGroup) stocksGroup).size();
         for (int i = 0; i < size; i++) {
             Stock stock = (Stock) ((stockGroup) stocksGroup).get(i);

@@ -34,7 +34,9 @@ public class Stock extends stockComponent {
     public Stock(String newStockName, String newStockCode) {
         this.stockName = newStockName;
         this.stockCode = newStockCode;
-        data = new onlineDataReaderAdapter(defaultTimeperiod(), this.stockCode);
+        System.out.println(newStockCode);
+        this.timePeriod = defaultTimeperiod();
+        data = new onlineDataReaderAdapter(this.timePeriod, this.stockCode);
         this.stockData = data.getData();
         initIndicators();
     }
@@ -73,7 +75,7 @@ public class Stock extends stockComponent {
 
     public String indicatorSignal(int d) {
         String trade = "none";
-        tick otick = stockData.getFirst();
+        tick otick = this.stockData.getFirst();
         //System.out.print(maList[0].getMAList().size());
         if (d == 20) {
             trade = getIndicator(otick, maList[0].get(maList[0].size() - 1), maList[0].get(maList[0].size() - 2));
