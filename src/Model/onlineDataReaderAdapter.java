@@ -7,11 +7,12 @@ public class onlineDataReaderAdapter  implements Data {
 	
 	private Date[] timeperiod = new Date[2];
 	private String stockCode = new String();
-	private onlineDataReader reader = new onlineDataReader();
+	private onlineDataReader reader;
 	
-	public onlineDataReaderAdapter(Date[] newtimePeriod, String newstockCode) {
+	public onlineDataReaderAdapter(Date[] newtimePeriod, String newstockCode, onlineDataReader newReader) {
 		this.timeperiod = newtimePeriod;
 		this.stockCode = newstockCode;
+		this.reader = newReader;
 	}
 
 	@Override

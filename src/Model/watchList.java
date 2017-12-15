@@ -7,7 +7,7 @@ public class watchList {
     private stockComponent stocksGroup = new stockGroup();
 
     public watchList() {
-        initList();
+        //initList();
     }
 
     private void initList() {

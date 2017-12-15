@@ -26,7 +26,7 @@ public class Stock extends stockComponent {
         this.stockName = newStockName;
         this.stockCode = newStockCode;
         this.timePeriod = timePeriod;
-        data = new onlineDataReaderAdapter(this.timePeriod, this.stockCode);
+        data = new onlineDataReaderAdapter(this.timePeriod, this.stockCode, new GoogleAPIData());
         this.stockData = data.getData();
         initIndicators();
     }
@@ -36,7 +36,7 @@ public class Stock extends stockComponent {
         this.stockCode = newStockCode;
         System.out.println(newStockCode);
         this.timePeriod = defaultTimeperiod();
-        data = new onlineDataReaderAdapter(this.timePeriod, this.stockCode);
+        data = new onlineDataReaderAdapter(this.timePeriod, this.stockCode, new GoogleAPIData());
         this.stockData = data.getData();
         initIndicators();
     }

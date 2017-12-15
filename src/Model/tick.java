@@ -19,7 +19,6 @@ public class tick {
         try {
             nDate = df.parse(newDate);
         } catch (ParseException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         this.tickDate = nDate;
