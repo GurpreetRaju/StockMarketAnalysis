@@ -13,7 +13,6 @@ public class LineChart implements Chart {
 
     private String xAxisLabel = "Date";
     private String yAxisLabel = "Stock price";
-    //private static Plot plot = (XYPlot) new Plot();
     private Stock stock;
     private JFreeChart lineChart;
     private TimeSeriesCollection dataset;

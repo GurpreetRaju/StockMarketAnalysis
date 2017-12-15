@@ -19,10 +19,10 @@ public class GoogleAPIData extends onlineDataReader {
         String[] datefrom = (toString(timeperiod[0])).split("-");// format yyyy-MM-dd
 
         String[] dateto = (toString(timeperiod[1])).split("-");// format yyyy-MM-dd
-        int monthTo = Integer.parseInt(dateto[1])-1;
-        datefrom[1] = Integer.toString(Integer.parseInt(datefrom[1])-1);
+        int monthTo = Integer.parseInt(dateto[1]);
+        int monthfrom = Integer.parseInt(datefrom[1]);
 
-        String urlString = "https://finance.google.com/finance/historical?q="+companyName+"&startdate="+dateto[2]+"-"+new DateFormatSymbols().getMonths()[monthTo-1]+"-"+dateto[0]+"&output=csv";
+        String urlString = "https://finance.google.com/finance/historical?q="+companyName+"&startdate="+datefrom[2]+"-"+new DateFormatSymbols().getMonths()[monthfrom-1]+"-"+datefrom[0]+"&output=csv";
         URL oracle;
         try{
             oracle = new URL(urlString);
